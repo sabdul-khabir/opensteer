@@ -66,7 +66,7 @@
 
 #include "OpenSteer/AbstractVehicle.h"
 #include "OpenSteer/SteerLibrary.h"
-#include "OpenSteer/Annotation.h"
+#include "Annotation.h"
 
 
 namespace OpenSteer {

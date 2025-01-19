@@ -46,10 +46,10 @@
 #define OPENSTEER_ANNOTATION_H
 
 #ifndef NOT_OPENSTEERDEMO  // only when building OpenSteerDemo
-#include "OpenSteer/Draw.h"
+#include "Draw.h"
 #endif // NOT_OPENSTEERDEMO
 #include "OpenSteer/Vec3.h"
-#include "OpenSteer/Color.h"
+#include "Color.h"
 
 // ----------------------------------------------------------------------------
 

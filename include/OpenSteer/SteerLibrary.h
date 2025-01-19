@@ -53,7 +53,7 @@
 #include "OpenSteer/Utilities.h"
 
 // Include OpenSteer::Color, OpenSteer::gBlack, ...
-#include "Color.h"
+//#include "Color.h"
 
 namespace OpenSteer {
 

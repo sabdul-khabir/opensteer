@@ -48,9 +48,9 @@
 
 
 
-#include "OpenSteer/Clock.h"
+#include "Clock.h"
 #include "OpenSteer/PlugIn.h"
-#include "OpenSteer/Camera.h"
+#include "Camera.h"
 #include "OpenSteer/Utilities.h"
 
 
@@ -298,7 +298,7 @@ namespace OpenSteer {
 // ----------------------------------------------------------------------------
 
 
-#include "OpenSteer/Draw.h"
+#include "Draw.h"
 
 
 // ----------------------------------------------------------------------------

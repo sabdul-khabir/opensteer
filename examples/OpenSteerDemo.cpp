@@ -41,9 +41,9 @@
 // ----------------------------------------------------------------------------
 
 
-#include "OpenSteer/OpenSteerDemo.h"
-#include "OpenSteer/Annotation.h"
-#include "OpenSteer/Color.h"
+#include "OpenSteerDemo.h"
+#include "Annotation.h"
+#include "Color.h"
 #include "OpenSteer/Vec3.h"
 
 #include <algorithm>

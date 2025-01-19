@@ -37,10 +37,10 @@
 
 
 #include <sstream>
-#include "OpenSteer/SimpleVehicle.h"
-#include "OpenSteer/OpenSteerDemo.h"
+#include "SimpleVehicle.h"
+#include "OpenSteerDemo.h"
 #include "OpenSteer/Proximity.h"
-#include "OpenSteer/Color.h"
+#include "Color.h"
 #include "OpenSteer/UnusedParameter.h"
 
 #ifdef WIN32

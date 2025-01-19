@@ -53,9 +53,9 @@
 #include <iomanip>
 #include <sstream>
 #include <cassert>
-#include "OpenSteer/OpenSteerDemo.h"
-#include "OpenSteer/SimpleVehicle.h"
-#include "OpenSteer/Color.h"
+#include "OpenSteerDemo.h"
+#include "SimpleVehicle.h"
+#include "Color.h"
 #include "OpenSteer/UnusedParameter.h"
 
 // Include OpenSteer::PolylineSegmentedPathwaySegmentRadii

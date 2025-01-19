@@ -53,7 +53,7 @@
 
 
 #include "OpenSteer/Vec3.h"
-#include "OpenSteer/Color.h"
+#include "Color.h"
 #include "OpenSteer/AbstractVehicle.h"
 #include "OpenSteer/Obstacle.h"
 

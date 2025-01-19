@@ -36,9 +36,9 @@
 // ----------------------------------------------------------------------------
 
 
-#include "OpenSteer/SimpleVehicle.h"
-#include "OpenSteer/OpenSteerDemo.h"
-#include "OpenSteer/Color.h"
+#include "SimpleVehicle.h"
+#include "OpenSteerDemo.h"
+#include "Color.h"
 
 namespace {
 
