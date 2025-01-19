@@ -164,21 +164,41 @@ copy "$(TargetPath)" "$(ProjectDir)\lib"
   <ItemGroup>
     <ClCompile Include="..\src\lq.c" />
     <ClCompile Include="..\src\Obstacle.cpp" />
+    <ClCompile Include="..\src\Path.cpp" />
     <ClCompile Include="..\src\Pathway.cpp" />
-    <ClCompile Include="..\src\PlugIn.cpp" />
+    <ClCompile Include="..\src\PolylineSegmentedPath.cpp" />
+    <ClCompile Include="..\src\PolylineSegmentedPathwaySegmentRadii.cpp" />
+    <ClCompile Include="..\src\PolylineSegmentedPathwaySingleRadius.cpp" />
+    <ClCompile Include="..\src\SegmentedPath.cpp" />
+    <ClCompile Include="..\src\SegmentedPathway.cpp" />
     <ClCompile Include="..\src\Vec3.cpp" />
+    <ClCompile Include="..\src\Vec3Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\OpenSteer\AbstractVehicle.h" />
     <ClInclude Include="..\include\OpenSteer\LocalSpace.h" />
     <ClInclude Include="..\include\OpenSteer\lq.h" />
     <ClInclude Include="..\include\OpenSteer\Obstacle.h" />
+    <ClInclude Include="..\include\OpenSteer\Path.h" />
     <ClInclude Include="..\include\OpenSteer\Pathway.h" />
-    <ClInclude Include="..\include\OpenSteer\PlugIn.h" />
+    <ClInclude Include="..\include\OpenSteer\PolylineSegmentedPath.h" />
+    <ClInclude Include="..\include\OpenSteer\PolylineSegmentedPathwaySegmentRadii.h" />
+    <ClInclude Include="..\include\OpenSteer\PolylineSegmentedPathwaySingleRadius.h" />
     <ClInclude Include="..\include\OpenSteer\Proximity.h" />
+    <ClInclude Include="..\include\OpenSteer\QueryPathAlike.h" />
+    <ClInclude Include="..\include\OpenSteer\QueryPathAlikeBaseDataExtractionPolicies.h" />
+    <ClInclude Include="..\include\OpenSteer\QueryPathAlikeMappings.h" />
+    <ClInclude Include="..\include\OpenSteer\QueryPathAlikeUtilities.h" />
+    <ClInclude Include="..\include\OpenSteer\SegmentedPath.h" />
+    <ClInclude Include="..\include\OpenSteer\SegmentedPathAlikeUtilities.h" />
+    <ClInclude Include="..\include\OpenSteer\SegmentedPathway.h" />
+    <ClInclude Include="..\include\OpenSteer\SharedPointer.h" />
+    <ClInclude Include="..\include\OpenSteer\StandardTypes.h" />
     <ClInclude Include="..\include\OpenSteer\SteerLibrary.h" />
+    <ClInclude Include="..\include\OpenSteer\UnusedParameter.h" />
     <ClInclude Include="..\include\OpenSteer\Utilities.h" />
     <ClInclude Include="..\include\OpenSteer\Vec3.h" />
+    <ClInclude Include="..\include\OpenSteer\Vec3Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
