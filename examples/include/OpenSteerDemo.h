@@ -49,7 +49,7 @@
 
 
 #include "Clock.h"
-#include "OpenSteer/PlugIn.h"
+#include "PlugIn.h"
 #include "Camera.h"
 #include "OpenSteer/Utilities.h"
 
