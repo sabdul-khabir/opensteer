@@ -493,13 +493,13 @@ bool OpenSteer::OpenSteerDemo::mouseInWindow = false;
 
 
 void 
-OpenSteer::OpenSteerDemo::init3dCamera (AbstractVehicle& selected)
+OpenSteer::OpenSteerDemo::init3dCamera (AbstractVehicle* selected)
 {
     init3dCamera (selected, cameraTargetDistance, camera2dElevation);
 }
 
 void 
-OpenSteer::OpenSteerDemo::init3dCamera (AbstractVehicle& selected,
+OpenSteer::OpenSteerDemo::init3dCamera (AbstractVehicle* selected,
                                   float distance,
                                   float elevation)
 {
@@ -511,13 +511,13 @@ OpenSteer::OpenSteerDemo::init3dCamera (AbstractVehicle& selected,
 
 
 void 
-OpenSteer::OpenSteerDemo::init2dCamera (AbstractVehicle& selected)
+OpenSteer::OpenSteerDemo::init2dCamera (AbstractVehicle* selected)
 {
     init2dCamera (selected, cameraTargetDistance, camera2dElevation);
 }
 
 void 
-OpenSteer::OpenSteerDemo::init2dCamera (AbstractVehicle& selected,
+OpenSteer::OpenSteerDemo::init2dCamera (AbstractVehicle* selected,
                                   float distance,
                                   float elevation)
 {
@@ -529,34 +529,34 @@ OpenSteer::OpenSteerDemo::init2dCamera (AbstractVehicle& selected,
 
 
 void 
-OpenSteer::OpenSteerDemo::position3dCamera (AbstractVehicle& selected)
+OpenSteer::OpenSteerDemo::position3dCamera (AbstractVehicle* selected)
 {
     position3dCamera (selected, cameraTargetDistance, camera2dElevation);
 }
 
 void 
-OpenSteer::OpenSteerDemo::position3dCamera (AbstractVehicle& selected,
+OpenSteer::OpenSteerDemo::position3dCamera (AbstractVehicle* selected,
                                             float distance,
                                             float /*elevation*/)
 {
-    selectedVehicle = &selected;
-    if (&selected)
+    selectedVehicle = selected;
+    if (selected != NULL)
     {
-        const Vec3 behind = selected.forward() * -distance;
-        camera.setPosition (selected.position() + behind);
-        camera.target = selected.position();
+        const Vec3 behind = selected->forward() * -distance;
+        camera.setPosition (selected->position() + behind);
+        camera.target = selected->position();
     }
 }
 
 
 void 
-OpenSteer::OpenSteerDemo::position2dCamera (AbstractVehicle& selected)
+OpenSteer::OpenSteerDemo::position2dCamera (AbstractVehicle* selected)
 {
     position2dCamera (selected, cameraTargetDistance, camera2dElevation);
 }
 
 void 
-OpenSteer::OpenSteerDemo::position2dCamera (AbstractVehicle& selected,
+OpenSteer::OpenSteerDemo::position2dCamera (AbstractVehicle* selected,
                                             float distance,
                                             float elevation)
 {
@@ -577,9 +577,9 @@ OpenSteer::OpenSteerDemo::position2dCamera (AbstractVehicle& selected,
 void 
 OpenSteer::OpenSteerDemo::updateCamera (const float currentTime,
                                         const float elapsedTime,
-                                        const AbstractVehicle& selected)
+                                        const AbstractVehicle* selected)
 {
-    camera.vehicleToTrack = &selected;
+    camera.vehicleToTrack = selected;
     camera.update (currentTime, elapsedTime, clock.getPausedState ());
 }
 
@@ -625,10 +625,12 @@ OpenSteer::OpenSteerDemo::gridUtility (const Vec3& gridTarget)
 
 
 void 
-OpenSteer::OpenSteerDemo::highlightVehicleUtility (const AbstractVehicle& vehicle)
+OpenSteer::OpenSteerDemo::highlightVehicleUtility (const AbstractVehicle* vehicle)
 {
-    if (&vehicle != NULL)
-        drawXZDisk (vehicle.radius(), vehicle.position(), gGray60, 20);
+   if (vehicle != NULL)
+   {
+      drawXZDisk(vehicle->radius(), vehicle->position(), gGray60, 20);
+   }
 }
 
 
@@ -637,12 +639,15 @@ OpenSteer::OpenSteerDemo::highlightVehicleUtility (const AbstractVehicle& vehicl
 
 
 void 
-OpenSteer::OpenSteerDemo::circleHighlightVehicleUtility (const AbstractVehicle& vehicle)
+OpenSteer::OpenSteerDemo::circleHighlightVehicleUtility (const AbstractVehicle* vehicle)
 {
-    if (&vehicle != NULL) drawXZCircle (vehicle.radius () * 1.1f,
-                                        vehicle.position(),
-                                        gGray60,
-                                        20);
+   if (vehicle != NULL)
+   {
+      drawXZCircle(vehicle->radius() * 1.1f,
+         vehicle->position(),
+         gGray60,
+         20);
+   }
 }
 
 
@@ -652,14 +657,14 @@ OpenSteer::OpenSteerDemo::circleHighlightVehicleUtility (const AbstractVehicle& 
 
 
 void 
-OpenSteer::OpenSteerDemo::drawBoxHighlightOnVehicle (const AbstractVehicle& v,
+OpenSteer::OpenSteerDemo::drawBoxHighlightOnVehicle (const AbstractVehicle* v,
                                                const Color& color)
 {
-    if (&v)
+    if (v != NULL)
     {
-        const float diameter = v.radius() * 2;
+        const float diameter = v->radius() * 2;
         const Vec3 size (diameter, diameter, diameter);
-        drawBoxOutline (v, size, color);
+        drawBoxOutline (*v, size, color);
     }
 }
 
@@ -671,16 +676,16 @@ OpenSteer::OpenSteerDemo::drawBoxHighlightOnVehicle (const AbstractVehicle& v,
 
 
 void 
-OpenSteer::OpenSteerDemo::drawCircleHighlightOnVehicle (const AbstractVehicle& v,
+OpenSteer::OpenSteerDemo::drawCircleHighlightOnVehicle (const AbstractVehicle* v,
                                                   const float radiusMultiplier,
                                                   const Color& color)
 {
-    if (&v)
+    if (v != NULL)
     {
         const Vec3& cPosition = camera.position();
-        draw3dCircle  (v.radius() * radiusMultiplier,  // adjusted radius
-                       v.position(),                   // center
-                       v.position() - cPosition,       // view axis
+        draw3dCircle  (v->radius() * radiusMultiplier,  // adjusted radius
+                       v->position(),                   // center
+                       v->position() - cPosition,       // view axis
                        color,                          // drawing color
                        20);                            // circle segments
     }
@@ -1041,7 +1046,7 @@ namespace {
     void 
     drawDisplayPlugInName (void)
     {
-        const float h = glutGet (GLUT_WINDOW_HEIGHT);
+        const int h = glutGet (GLUT_WINDOW_HEIGHT);
         const OpenSteer::Vec3 screenLocation (10, h-20, 0);
         draw2dTextAt2dLocation (*OpenSteer::OpenSteerDemo::nameOfSelectedPlugIn (),
                                 screenLocation,
@@ -1444,7 +1449,7 @@ OpenSteer::initializeGraphics (int argc, char **argv)
     glutInit (&argc, argv);  
 
     // display modes: RGB+Z and double buffered
-    GLint mode = GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE;
+    unsigned int mode = GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE;
     glutInitDisplayMode (mode);
 
     // create and initialize our window with GLUT tools
@@ -1461,18 +1466,18 @@ OpenSteer::initializeGraphics (int argc, char **argv)
     initGL ();
 
     // register our display function, make it the idle handler too
-    glutDisplayFunc (&displayFunc);  
-    glutIdleFunc (&displayFunc);
+    glutDisplayFunc (displayFunc);  
+    glutIdleFunc (displayFunc);
 
     // register handler for window reshaping
-    glutReshapeFunc (&reshapeFunc);
+    glutReshapeFunc (reshapeFunc);
 
     // register handler for keyboard events
-    glutKeyboardFunc (&keyboardFunc);
-    glutSpecialFunc (&specialFunc);
+    glutKeyboardFunc (keyboardFunc);
+    glutSpecialFunc (specialFunc);
 
     // register handler for mouse button events
-    glutMouseFunc (&mouseButtonFunc);
+    glutMouseFunc (mouseButtonFunc);
 
     // register handler to track mouse motion when any button down
     glutMotionFunc (mouseMotionFunc);
@@ -1504,14 +1509,14 @@ OpenSteer::runGraphics (void)
 float 
 OpenSteer::drawGetWindowHeight (void) 
 {
-    return glutGet (GLUT_WINDOW_HEIGHT);
+    return (float)glutGet (GLUT_WINDOW_HEIGHT);
 }
 
 
 float 
 OpenSteer::drawGetWindowWidth  (void) 
 {
-    return glutGet (GLUT_WINDOW_WIDTH);
+    return (float)glutGet (GLUT_WINDOW_WIDTH);
 }
 
 

@@ -284,7 +284,7 @@ namespace {
                 m_AllPlayers.push_back(pMicTest);
             }
             // initialize camera
-            OpenSteerDemo::init2dCamera (*m_Ball);
+            OpenSteerDemo::init2dCamera (m_Ball);
             OpenSteerDemo::camera.setPosition (10, OpenSteerDemo::camera2dElevation, 10);
             OpenSteerDemo::camera.fixedPosition.set (40, 40, 40);
             OpenSteerDemo::camera.mode = Camera::cmFixed;
@@ -347,7 +347,7 @@ namespace {
                 draw2dTextAt3dLocation (*"start", Vec3::zero, gGreen, drawGetWindowWidth(), drawGetWindowHeight());
             }
             // update camera, tracking test vehicle
-            OpenSteerDemo::updateCamera (currentTime, elapsedTime, *OpenSteerDemo::selectedVehicle);
+            OpenSteerDemo::updateCamera (currentTime, elapsedTime, OpenSteerDemo::selectedVehicle);
 
             // draw "ground plane"
             OpenSteerDemo::gridUtility (Vec3(0,0,0));

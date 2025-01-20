@@ -489,7 +489,7 @@ namespace {
             for (int i = 0; i < gPedestrianStartCount; i++) addPedestrianToCrowd ();
 
             // initialize camera and selectedVehicle
-            Pedestrian& firstPedestrian = **crowd.begin();
+            Pedestrian* firstPedestrian = *crowd.begin();
             OpenSteerDemo::init3dCamera (firstPedestrian);
             OpenSteerDemo::camera.mode = Camera::cmFixedDistanceOffset;
             OpenSteerDemo::camera.fixedTarget.set (15, 0, 30);
@@ -508,16 +508,16 @@ namespace {
         void redraw (const float currentTime, const float elapsedTime)
         {
             // selected Pedestrian (user can mouse click to select another)
-            AbstractVehicle& selected = *OpenSteerDemo::selectedVehicle;
+            AbstractVehicle* selected = OpenSteerDemo::selectedVehicle;
 
             // Pedestrian nearest mouse (to be highlighted)
-            AbstractVehicle& nearMouse = *OpenSteerDemo::vehicleNearestToMouse ();
+            AbstractVehicle* nearMouse = OpenSteerDemo::vehicleNearestToMouse ();
 
             // update camera
             OpenSteerDemo::updateCamera (currentTime, elapsedTime, selected);
 
             // draw "ground plane"
-            if (OpenSteerDemo::selectedVehicle) gridCenter = selected.position();
+            if (OpenSteerDemo::selectedVehicle != NULL) gridCenter = selected->position();
             OpenSteerDemo::gridUtility (gridCenter);
 
             // draw and annotate each Pedestrian
@@ -533,19 +533,19 @@ namespace {
             serialNumberAnnotationUtility (selected, nearMouse);
 
             // textual annotation for selected Pedestrian
-            if (OpenSteerDemo::selectedVehicle && OpenSteer::annotationIsOn())
+            if ((OpenSteerDemo::selectedVehicle != NULL) && OpenSteer::annotationIsOn())
             {
                 const Color color (0.8f, 0.8f, 1.0f);
                 const Vec3 textOffset (0, 0.25f, 0);
-                const Vec3 textPosition = selected.position() + textOffset;
+                const Vec3 textPosition = selected->position() + textOffset;
                 const Vec3 camPosition = OpenSteerDemo::camera.position();
-                const float camDistance = Vec3::distance (selected.position(),
+                const float camDistance = Vec3::distance (selected->position(),
                                                           camPosition);
                 const char* spacer = "      ";
                 std::ostringstream annote;
                 annote << std::setprecision (2);
                 annote << std::setiosflags (std::ios::fixed);
-                annote << spacer << "1: speed: " << selected.speed() << std::endl;
+                annote << spacer << "1: speed: " << selected->speed() << std::endl;
                 annote << std::setprecision (1);
                 annote << spacer << "2: cam dist: " << camDistance << std::endl;
                 annote << spacer << "3: no third thing" << std::ends;
@@ -575,20 +575,20 @@ namespace {
         }
 
 
-        void serialNumberAnnotationUtility (const AbstractVehicle& selected,
-                                            const AbstractVehicle& nearMouse)
+        void serialNumberAnnotationUtility (const AbstractVehicle* selected,
+                                            const AbstractVehicle* nearMouse)
         {
             // display a Pedestrian's serial number as a text label near its
             // screen position when it is near the selected vehicle or mouse.
-            if (&selected && &nearMouse && OpenSteer::annotationIsOn())
+            if ((selected != NULL) && (nearMouse != NULL) && OpenSteer::annotationIsOn())
             {
                 for (iterator i = crowd.begin(); i != crowd.end(); i++)
                 {
                     AbstractVehicle* vehicle = *i;
                     const float nearDistance = 6;
                     const Vec3& vp = vehicle->position();
-                    const Vec3& np = nearMouse.position();
-                    if ((Vec3::distance (vp, selected.position()) < nearDistance)
+                    const Vec3& np = nearMouse->position();
+                    if ((Vec3::distance (vp, selected->position()) < nearDistance)
                         ||
                         (&nearMouse && (Vec3::distance (vp, np) < nearDistance)))
                     {
@@ -650,7 +650,7 @@ namespace {
             for (iterator i = crowd.begin(); i != crowd.end(); i++) (**i).reset ();
 
             // reset camera position
-            OpenSteerDemo::position2dCamera (*OpenSteerDemo::selectedVehicle);
+            OpenSteerDemo::position2dCamera (OpenSteerDemo::selectedVehicle);
 
             // make camera jump immediately to new position
             OpenSteerDemo::camera.doNotSmoothNextMove ();

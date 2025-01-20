@@ -847,7 +847,7 @@ namespace {
             }
 
             // initialize camera
-            OpenSteerDemo::init2dCamera (*ctfSeeker);
+            OpenSteerDemo::init2dCamera (ctfSeeker);
             OpenSteerDemo::camera.mode = Camera::cmFixedDistanceOffset;
             OpenSteerDemo::camera.fixedTarget.set (15, 0, 0);
             OpenSteerDemo::camera.fixedPosition.set (80, 60, 0);
@@ -870,10 +870,10 @@ namespace {
         void redraw (const float currentTime, const float elapsedTime)
         {
             // selected vehicle (user can mouse click to select another)
-            AbstractVehicle& selected = *OpenSteerDemo::selectedVehicle;
+            AbstractVehicle* selected = OpenSteerDemo::selectedVehicle;
 
             // vehicle nearest mouse (to be highlighted)
-            AbstractVehicle& nearMouse = *OpenSteerDemo::vehicleNearestToMouse ();
+            AbstractVehicle* nearMouse = OpenSteerDemo::vehicleNearestToMouse ();
 
             // update camera
             OpenSteerDemo::updateCamera (currentTime, elapsedTime, selected);
@@ -884,10 +884,13 @@ namespace {
             const Vec3 cameraForward = OpenSteerDemo::camera.xxxls().forward();
             const float goalDot = cameraForward.dot (goalDirection);
             const float blend = remapIntervalClip (goalDot, 1, 0, 0.5, 0);
-            const Vec3 gridCenter = interpolate (blend,
-                                                 selected.position(),
-                                                 gHomeBaseCenter);
-            OpenSteerDemo::gridUtility (gridCenter);
+            if (selected != NULL)
+            {
+               const Vec3 gridCenter = interpolate(blend,
+                  selected->position(),
+                  gHomeBaseCenter);
+               OpenSteerDemo::gridUtility(gridCenter);
+            }
 
             // draw the seeker, obstacles and home base
             ctfSeeker->draw();
@@ -928,7 +931,7 @@ namespace {
             for (int i = 0; i<ctfEnemyCount; i++) ctfEnemies[i]->reset ();
 
             // reset camera position
-            OpenSteerDemo::position2dCamera (*ctfSeeker);
+            OpenSteerDemo::position2dCamera (ctfSeeker);
 
             // make camera jump immediately to new position
             OpenSteerDemo::camera.doNotSmoothNextMove ();

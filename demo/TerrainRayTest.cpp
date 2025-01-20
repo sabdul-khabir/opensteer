@@ -51,10 +51,15 @@ RayTester::~RayTester() {
 }
 
 
-void RayTester::LoadData( char *fname,	TRTScalar xMin, TRTScalar xMax,
+bool RayTester::LoadData( char *fname,	TRTScalar xMin, TRTScalar xMax,
 										TRTScalar yMin, TRTScalar yMax,
 										TRTScalar zMin, TRTScalar zMax ) {
-	FILE *inf=fopen(fname,"rb");
+	FILE* inf = NULL;
+	errno_t err = fopen_s(&inf, fname, "rb");
+	if (err != 0)
+	{
+		return false;
+	}
 
 	fread(&width,sizeof(width),1,inf);
 	fread(&height,sizeof(height),1,inf);
@@ -148,6 +153,7 @@ void RayTester::LoadData( char *fname,	TRTScalar xMin, TRTScalar xMax,
 				#endif
 			}
 
+	return true;
 }
 
 

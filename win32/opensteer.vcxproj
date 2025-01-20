@@ -110,11 +110,11 @@ copy "$(TargetPath)" "$(ProjectDir)\lib"
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Lib>
-      <OutputFile>$(OutDir)$(ProjectName)d.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)lib"
-copy "$(OutDir)$(ProjectName)d.lib" "$(ProjectDir)lib"
+      <Command>mkdir "$(ProjectDir)lib\$(Configuration)"
+copy "$(OutDir)$(ProjectName)$(TargetExt)" "$(ProjectDir)lib\$(Configuration)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -156,8 +156,8 @@ copy "$(TargetPath)" "$(ProjectDir)\lib"
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)\lib"
-copy "$(TargetPath)" "$(ProjectDir)\lib"
+      <Command>mkdir "$(ProjectDir)lib\$(Configuration)"
+copy "$(TargetPath)" "$(ProjectDir)lib\$(Configuration)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

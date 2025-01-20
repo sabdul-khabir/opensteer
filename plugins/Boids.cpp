@@ -224,7 +224,7 @@ namespace {
                 if (this == OpenSteerDemo::selectedVehicle)
                 {
                     OpenSteerDemo::position3dCamera
-                        (*OpenSteerDemo::selectedVehicle); 
+                        (OpenSteerDemo::selectedVehicle); 
                     OpenSteerDemo::camera.doNotSmoothNextMove ();
                 }
             }
@@ -350,7 +350,7 @@ namespace {
             for (int i = 0; i < 200; i++) addBoidToFlock ();
 
             // initialize camera
-            OpenSteerDemo::init3dCamera (*OpenSteerDemo::selectedVehicle);
+            OpenSteerDemo::init3dCamera (OpenSteerDemo::selectedVehicle);
             OpenSteerDemo::camera.mode = Camera::cmFixed;
             OpenSteerDemo::camera.fixedDistDistance = OpenSteerDemo::cameraTargetDistance;
             OpenSteerDemo::camera.fixedDistVOffset = 0;
@@ -379,10 +379,10 @@ namespace {
         void redraw (const float currentTime, const float elapsedTime)
         {
             // selected vehicle (user can mouse click to select another)
-            AbstractVehicle& selected = *OpenSteerDemo::selectedVehicle;
+            AbstractVehicle* selected = OpenSteerDemo::selectedVehicle;
 
             // vehicle nearest mouse (to be highlighted)
-            AbstractVehicle& nearMouse = *OpenSteerDemo::vehicleNearestToMouse ();
+            AbstractVehicle* nearMouse = OpenSteerDemo::vehicleNearestToMouse ();
 
             // update camera
             OpenSteerDemo::updateCamera (currentTime, elapsedTime, selected);
@@ -451,7 +451,7 @@ namespace {
             for (iterator i = flock.begin(); i != flock.end(); i++) (**i).reset();
 
             // reset camera position
-            OpenSteerDemo::position3dCamera (*OpenSteerDemo::selectedVehicle);
+            OpenSteerDemo::position3dCamera (OpenSteerDemo::selectedVehicle);
 
             // make camera jump immediately to new position
             OpenSteerDemo::camera.doNotSmoothNextMove ();

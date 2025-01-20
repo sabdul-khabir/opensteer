@@ -106,7 +106,7 @@ namespace {
             theVehicle.push_back (gOneTurning);
 
             // initialize camera
-            OpenSteerDemo::init2dCamera (*gOneTurning);
+            OpenSteerDemo::init2dCamera (gOneTurning);
             OpenSteerDemo::camera.setPosition (10,
                                                OpenSteerDemo::camera2dElevation,
                                                10);
@@ -132,7 +132,7 @@ namespace {
             draw2dTextAt3dLocation (*"start", Vec3::zero, gGreen, drawGetWindowWidth(), drawGetWindowHeight());
 
             // update camera, tracking test vehicle
-            OpenSteerDemo::updateCamera (currentTime, elapsedTime, *gOneTurning);
+            OpenSteerDemo::updateCamera (currentTime, elapsedTime, gOneTurning);
 
             // draw "ground plane"
             OpenSteerDemo::gridUtility (gOneTurning->position());

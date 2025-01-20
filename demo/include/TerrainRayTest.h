@@ -83,7 +83,7 @@ public:
 	RayTester();						// simple constructor
 	~RayTester();						// destructor
 
-	void LoadData( char *fname,	TRTScalar xMin=0, TRTScalar xMax=0,
+	bool LoadData( char *fname,	TRTScalar xMin=0, TRTScalar xMax=0,
 								TRTScalar yMin=0, TRTScalar yMax=0,
 								TRTScalar zMin=0, TRTScalar zMax=0 );
 

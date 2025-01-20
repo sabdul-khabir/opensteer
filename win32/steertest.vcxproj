@@ -105,7 +105,7 @@ copy "$(TargetPath)" "$(ProjectDir)\bin"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;$(ProjectDir)..\examples\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;$(ProjectDir)..\demo\include;$(ProjectDir)..\..\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -117,14 +117,14 @@ copy "$(TargetPath)" "$(ProjectDir)\bin"
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opensteerd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opensteer.lib;freeglut_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\$(Configuration);$(ProjectDir)..\..\freeglut\out\build\x64-Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)\bin"
-copy "$(TargetPath)" "$(ProjectDir)\bin"
+      <Command>mkdir "$(ProjectDir)bin\$(Configuration)"
+copy "$(TargetPath)" "$(ProjectDir)bin\$(Configuration)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@ copy "$(TargetPath)" "$(ProjectDir)\bin"
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;$(ProjectDir)..\examples\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;$(ProjectDir)..\demo\include;$(ProjectDir)..\..\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -174,23 +174,31 @@ copy "$(TargetPath)" "$(ProjectDir)\bin"
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opensteer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opensteer.lib;freeglut_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\$(Configuration);$(ProjectDir)..\..\freeglut\out\build\x64-Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)\bin"
-copy "$(TargetPath)" "$(ProjectDir)\bin"
+      <Command>mkdir "$(ProjectDir)bin\$(Configuration)"
+copy "$(TargetPath)" "$(ProjectDir)bin\$(Configuration)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\examples\main.cpp" />
-    <ClCompile Include="..\examples\OpenSteerDemo.cpp" />
+    <ClCompile Include="..\demo\Camera.cpp" />
+    <ClCompile Include="..\demo\Clock.cpp" />
+    <ClCompile Include="..\demo\Color.cpp" />
+    <ClCompile Include="..\demo\Draw.cpp" />
+    <ClCompile Include="..\demo\main.cpp" />
+    <ClCompile Include="..\demo\OldPathway.cpp" />
+    <ClCompile Include="..\demo\OpenSteerDemo.cpp" />
+    <ClCompile Include="..\demo\PlugIn.cpp" />
+    <ClCompile Include="..\demo\SimpleVehicle.cpp" />
+    <ClCompile Include="..\demo\TerrainRayTest.cpp" />
     <ClCompile Include="..\plugins\Boids.cpp" />
     <ClCompile Include="..\plugins\CaptureTheFlag.cpp" />
     <ClCompile Include="..\plugins\LowSpeedTurn.cpp" />
@@ -201,7 +209,16 @@ copy "$(TargetPath)" "$(ProjectDir)\bin"
     <ClCompile Include="..\plugins\Soccer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\examples\include\OpenSteerDemo.h" />
+    <ClInclude Include="..\demo\include\Annotation.h" />
+    <ClInclude Include="..\demo\include\Camera.h" />
+    <ClInclude Include="..\demo\include\Clock.h" />
+    <ClInclude Include="..\demo\include\Color.h" />
+    <ClInclude Include="..\demo\include\Draw.h" />
+    <ClInclude Include="..\demo\include\OldPathway.h" />
+    <ClInclude Include="..\demo\include\OpenSteerDemo.h" />
+    <ClInclude Include="..\demo\include\PlugIn.h" />
+    <ClInclude Include="..\demo\include\SimpleVehicle.h" />
+    <ClInclude Include="..\demo\include\TerrainRayTest.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

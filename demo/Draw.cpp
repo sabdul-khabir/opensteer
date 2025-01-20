@@ -47,7 +47,7 @@
 //
 // ----------------------------------------------------------------------------
 
-#include "OpenSteer/Draw.h"
+#include "Draw.h"
 
 #include <iomanip>
 #include <sstream>
@@ -258,7 +258,7 @@ OpenSteer::warnIfInUpdatePhase2 (const char* name)
     message << name;
     message << ")";
     message << std::ends;
-    std::cerr << message;       // send message to cerr, let host app worry about where to redirect it
+    std::cerr << message.str();       // send message to cerr, let host app worry about where to redirect it
 }
 
 
@@ -1781,21 +1781,21 @@ namespace OpenSteer {
         // drawing according to an arbitary but reproducable criterion.
         void drawMeshedTriangleLine (const Vec3& a, 
                                      const Vec3& b,
-                                     const Color& color) const
+                                     const Color& line_color) const
         {
             if (a.x != b.x)
             {
-                if (a.x > b.x) drawLine (a, b, color);
+                if (a.x > b.x) drawLine (a, b, line_color);
             }
             else
             {
                 if (a.y != b.y)
                 {
-                    if (a.y > b.y) drawLine (a, b, color); 
+                    if (a.y > b.y) drawLine (a, b, line_color);
                 }
                 else
                 {
-                    if (a.z > b.z) drawLine (a, b, color); 
+                    if (a.z > b.z) drawLine (a, b, line_color);
                 }
             }
         }

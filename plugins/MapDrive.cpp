@@ -1125,11 +1125,11 @@ namespace {
         // the possitions of impassible regions
         //
         Vec3 steerToAvoidObstaclesOnMap (const float minTimeToCollision,
-                                         const TerrainMap& map)
+                                         const TerrainMap& terrain_map)
         {
             return steerToAvoidObstaclesOnMap (minTimeToCollision,
-                                               map,
-                                               Vec3::zero); // no steer hint
+                                                terrain_map,
+                                                Vec3::zero); // no steer hint
         }
 
 
@@ -1137,10 +1137,10 @@ namespace {
         // to avoid collisions within the next minTimeToCollision seconds.
         //
         Vec3 steerToAvoidObstaclesOnMap (const float minTimeToCollision,
-                                         const TerrainMap& map,
+                                         const TerrainMap& terrain_map,
                                          const Vec3& steerHint)
         {
-            const float spacing = map.minSpacing() / 2;
+            const float spacing = terrain_map.minSpacing() / 2;
             const float maxSide = radius();
             const float maxForward = minTimeToCollision * speed();
             const int maxSamples = (int) (maxForward / spacing);
@@ -1217,7 +1217,7 @@ namespace {
                                                        gRed,
                                                        lObsPos)
                                       / spacing) :
-                               map.scanXZray (lOffset, step, maxSamples));
+                   terrain_map.scanXZray (lOffset, step, maxSamples));
                 const int R = (curvedSteering ? 
                                (int) (scanObstacleMap (rOffset,
                                                         center,
@@ -1228,7 +1228,7 @@ namespace {
                                                        gRed,
                                                        rObsPos)
                                       / spacing) :
-                               map.scanXZray (rOffset, step, maxSamples));
+                   terrain_map.scanXZray (rOffset, step, maxSamples));
 
                 if ((L > 0) && (L < nearestL))
                 {
@@ -1285,7 +1285,7 @@ namespace {
                         const Vec3 end = fOffset + corridorFront + (endside * k);
                         const Vec3 ray = end - start;
                         const float rayLength = ray.length();
-                        const Vec3 step = ray * spacing / rayLength;
+                        const Vec3 spacing_step = ray * spacing / rayLength;
                         const int raySamples = (int) (rayLength / spacing);
                         const float endRadius =
                             wingSlope () * maxForward * fraction *
@@ -1301,10 +1301,10 @@ namespace {
                                                                   afterColor,
                                                                   ignore)
                                                  / spacing) :
-                                          map.scanXZray (start, step, raySamples));
+                           terrain_map.scanXZray (start, spacing_step, raySamples));
 
                         if (!curvedSteering)
-                            annotateAvoidObstaclesOnMap (start,scan,step);
+                            annotateAvoidObstaclesOnMap (start,scan, spacing_step);
 
                         if (j==1) 
                         {
@@ -1735,18 +1735,18 @@ namespace {
         //
         Vec3 steerToFollowPath (const int direction,
                                 const float predictionTime,
-                                GCRoute& path)
+                                GCRoute& route_path)
         {
             if (curvedSteering)
-                return steerToFollowPathCurve (direction, predictionTime, path);
+                return steerToFollowPathCurve (direction, predictionTime, route_path);
             else
-                return steerToFollowPathLinear (direction, predictionTime, path);
+                return steerToFollowPathLinear (direction, predictionTime, route_path);
         }
 
 
         Vec3 steerToFollowPathLinear (const int direction,
                                       const float predictionTime,
-                                      GCRoute& path)
+                                      GCRoute& route_path)
         {
             // our goal will be offset from our path distance by this amount
             const float pathDistanceOffset = direction * predictionTime * speed();
@@ -1756,10 +1756,10 @@ namespace {
 
             // measure distance along path of our current and predicted positions
             const float nowPathDistance =
-                path.mapPointToPathDistance (position ());
+               route_path.mapPointToPathDistance (position ());
 
             // are we facing in the correction direction?
-            const Vec3 pathHeading = mapPointToTangent( path, position() ) * static_cast< float >( direction );// path.tangentAt(position()) * (float)direction;
+            const Vec3 pathHeading = mapPointToTangent(route_path, position() ) * static_cast< float >( direction );// path.tangentAt(position()) * (float)direction;
             const bool correctDirection = pathHeading.dot (forward ()) > 0;
 
             // find the point on the path nearest the predicted future position
@@ -1767,11 +1767,11 @@ namespace {
             // XXX special path-defined object which includes two Vec3s and a 
             // XXX bool (onPath,tangent (ignored), withinPath)
             float futureOutside;
-            const Vec3 onPath = mapPointToPointOnCenterLineAndOutside( path, futurePosition, futureOutside ); // path.mapPointToPath (futurePosition,futureOutside);
+            const Vec3 onPath = mapPointToPointOnCenterLineAndOutside(route_path, futurePosition, futureOutside ); // path.mapPointToPath (futurePosition,futureOutside);
 
             // determine if we are currently inside the path tube
             float nowOutside;
-            const Vec3 nowOnPath = mapPointToPointOnCenterLineAndOutside( path, position(), nowOutside );  // path.mapPointToPath (position (), nowOutside);
+            const Vec3 nowOnPath = mapPointToPointOnCenterLineAndOutside(route_path, position(), nowOutside );  // path.mapPointToPath (position (), nowOutside);
 
             // no steering is required if our present and future positions are
             // inside the path tube and we are facing in the correct direction
@@ -1790,26 +1790,26 @@ namespace {
                 const float targetPathDistance = (nowPathDistance + 
                                                   (pathDistanceOffset *
                                                    (correctDirection ? 1 : 0.1f)));
-                Vec3 target = path.mapPathDistanceToPoint (targetPathDistance);
+                Vec3 target = route_path.mapPathDistanceToPoint (targetPathDistance);
 
 
                 // if we are on one segment and target is on the next segment and
                 // the dot of the tangents of the two segments is negative --
                 // increase the target offset to compensate the fold back
-                const int ip =  static_cast< int >( mapPointToSegmentIndex( path, position() ) ); // path.indexOfNearestSegment (position ());
-                const int it =  static_cast< int >( mapPointToSegmentIndex( path, target ) ); // path.indexOfNearestSegment (target);
+                const int ip =  static_cast< int >( mapPointToSegmentIndex(route_path, position() ) ); // path.indexOfNearestSegment (position ());
+                const int it =  static_cast< int >( mapPointToSegmentIndex(route_path, target ) ); // path.indexOfNearestSegment (target);
                 // Because polyline paths have a constant tangent along a segment
                 // just set the distance along the segment to @c 0.0f.
-                Vec3 const ipTangent = path.mapSegmentDistanceToTangent( ip, 0.0f );
+                Vec3 const ipTangent = route_path.mapSegmentDistanceToTangent( ip, 0.0f );
                 // Because polyline paths have a constant tangent along a segment
                 // just set the distance along the segment to @c 0.0f.
-                Vec3 const itTangent = path.mapSegmentDistanceToTangent( it, 0.0f );
+                Vec3 const itTangent = route_path.mapSegmentDistanceToTangent( it, 0.0f );
                 if (((ip + direction) == it) &&
                     ( /* path.dotSegmentUnitTangents (it, ip) */  itTangent.dot( ipTangent ) < -0.1f ) )
                 {
                     const float newTargetPathDistance =
                         nowPathDistance + (pathDistanceOffset * 2);
-                    target = path.mapPathDistanceToPoint (newTargetPathDistance);
+                    target = route_path.mapPathDistanceToPoint (newTargetPathDistance);
                 }
 
                 annotatePathFollowing (futurePosition,onPath,target,futureOutside);
@@ -1841,21 +1841,21 @@ namespace {
         //
         Vec3 steerToFollowPathCurve (const int direction,
                                      const float predictionTime,
-                                     GCRoute& path)
+                                     GCRoute& route_path)
         {
             // predict our future position (based on current curvature and speed)
             const Vec3 futurePosition = predictFuturePosition (predictionTime);
             // find the point on the path nearest the predicted future position
             float futureOutside;
-            const Vec3 onPath =  mapPointToPointOnCenterLineAndOutside( path, futurePosition, futureOutside ); // path.mapPointToPath (futurePosition,futureOutside);
-            const Vec3 pathHeading =  mapPointAndDirectionToTangent( path, onPath, direction ); // path.tangentAt (onPath, direction);
+            const Vec3 onPath =  mapPointToPointOnCenterLineAndOutside(route_path, futurePosition, futureOutside ); // path.mapPointToPath (futurePosition,futureOutside);
+            const Vec3 pathHeading =  mapPointAndDirectionToTangent(route_path, onPath, direction ); // path.tangentAt (onPath, direction);
             const Vec3 rawBraking = forward () * maxForce () * -1;
             const Vec3 braking = ((futureOutside < 0) ? Vec3::zero : rawBraking);
             //qqq experimental wrong-way-fixer
             float nowOutside;
             Vec3 nowTangent;
             const Vec3 p = position ();
-            const Vec3 nowOnPath = path.mapPointToPath (p, nowTangent, nowOutside);
+            const Vec3 nowOnPath = route_path.mapPointToPath (p, nowTangent, nowOutside);
             nowTangent *= (float)direction;
             const float alignedness = nowTangent.dot (forward ());
 
@@ -1894,7 +1894,7 @@ namespace {
                                        position(), futureOutside);
 
                 // two cases, if entering a turn (a waypoint between path segments)
-                if ( /* path.nearWaypoint (onPath) */ isNearWaypoint( path, onPath )  && (futureOutside > 0))
+                if ( /* path.nearWaypoint (onPath) */ isNearWaypoint(route_path, onPath )  && (futureOutside > 0))
                 {
                     // steer to align with next path segment
                     annotationCircleOrDisk (0.5f, up(), futurePosition,
@@ -2313,8 +2313,8 @@ namespace {
             const float radiusChangeFactor = (dRadius + arcRadius) / arcRadius;
             const Vec3 resultLocation = center + (spoke * radiusChangeFactor);
             {
-                const Vec3 center = position () + localCenterOfCurvature;
-                annotationXZArc (position (), center, speed () * sign * -3,
+                const Vec3 a_center = position () + localCenterOfCurvature;
+                annotationXZArc (position (), a_center, speed () * sign * -3,
                                  20, gWhite);
             }
             // return the vector from vehicle position to the coimputed location
@@ -2588,7 +2588,7 @@ namespace {
             // init OpenSteerDemo camera
             initCamDist = 30;
             initCamElev = 15;
-            OpenSteerDemo::init2dCamera (*vehicle, initCamDist, initCamElev);
+            OpenSteerDemo::init2dCamera (vehicle, initCamDist, initCamElev);
             // "look straight down at vehicle" camera mode parameters
             OpenSteerDemo::camera.lookdownDistance = 50;
             // "static" camera mode parameters
@@ -2621,7 +2621,7 @@ namespace {
         void redraw (const float currentTime, const float elapsedTime)
         {
             // update camera, tracking test vehicle
-            OpenSteerDemo::updateCamera (currentTime, elapsedTime, *vehicle);
+            OpenSteerDemo::updateCamera (currentTime, elapsedTime, vehicle);
 
             // draw "ground plane"  (make it 4x map size)
             const float s = MapDriver::worldSize * 2;
@@ -2724,7 +2724,7 @@ namespace {
                 const float m = 10;
                 const float w = drawGetWindowWidth ();
                 const float f = w - (2 * m);
-                const float s = vehicle->relativeSpeed ();
+                const float spd = vehicle->relativeSpeed ();
 
                 // limit tick mark
                 const float l = vehicle->annoteMaxRelSpeed;
@@ -2739,7 +2739,7 @@ namespace {
                     draw2dLine (Vec3(m+(f*p), v-2, 0), Vec3(w-m, v-1, 0), gGreen, drawGetWindowWidth(), drawGetWindowHeight());
                 }
                 // speedometer: horizontal line with length proportional to speed
-                draw2dLine (Vec3 (m, v, 0), Vec3 (m + (f * s), v, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dLine (Vec3 (m, v, 0), Vec3 (m + (f * spd), v, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
                 // min and max tick marks
                 draw2dLine (Vec3 (m,       v, 0), Vec3 (m,      v-2, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
                 draw2dLine (Vec3 (w-m,     v, 0), Vec3 (w-m,    v-2, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
@@ -2769,7 +2769,7 @@ namespace {
             OpenSteerDemo::camera.doNotSmoothNextMove ();
 
             // reset camera position
-            OpenSteerDemo::position2dCamera (*vehicle, initCamDist, initCamElev);
+            OpenSteerDemo::position2dCamera (vehicle, initCamDist, initCamElev);
         }
 
         void handleFunctionKeys (int keyNumber)
