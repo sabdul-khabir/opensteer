@@ -302,7 +302,7 @@ namespace {
             const char* string = headOn ? "OUCH!" : "pardon me";
             const Vec3 location = position() + Vec3 (0, 0.5f, 0);
             if (OpenSteer::annotationIsOn())
-                draw2dTextAt3dLocation (*string, location, color, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (*string, location, color, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
         }
 
 
@@ -549,7 +549,7 @@ namespace {
                 annote << std::setprecision (1);
                 annote << spacer << "2: cam dist: " << camDistance << std::endl;
                 annote << spacer << "3: no third thing" << std::ends;
-                draw2dTextAt3dLocation (annote, textPosition, color, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (annote, textPosition, color, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
 
             // display status in the upper left corner of the window
@@ -569,9 +569,9 @@ namespace {
             status << "\n[F5] Wander: ";
             if (gWanderSwitch) status << "yes"; else status << "no";
             status << std::endl;
-            const float h = drawGetWindowHeight ();
+            const float h = OpenSteerDemo::drawGetWindowHeight ();
             const Vec3 screenLocation (10, h-50, 0);
-            draw2dTextAt2dLocation (status, screenLocation, gGray80, drawGetWindowWidth(), drawGetWindowHeight());
+            draw2dTextAt2dLocation (status, screenLocation, gGray80, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
         }
 
 
@@ -599,7 +599,7 @@ namespace {
                         const Color textColor (0.8f, 1, 0.8f);
                         const Vec3 textOffset (0, 0.25f, 0);
                         const Vec3 textPos = vehicle->position() + textOffset;
-                        draw2dTextAt3dLocation (sn, textPos, textColor, drawGetWindowWidth(), drawGetWindowHeight());
+                        draw2dTextAt3dLocation (sn, textPos, textColor, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
                     }
                 }
             }
@@ -668,18 +668,31 @@ namespace {
             }
         }
 
+        const char* getFunctionKeyHelp(int keyNumber) 
+        { 
+           switch (keyNumber)
+           {
+           case 1:   return "  F1     add a pedestrian to the crowd.";
+           case 2:   return "  F2     remove a pedestrian from crowd.";
+           case 3:   return "  F3     use next proximity database.";
+           case 4:   return "  F4     toggle directed path follow.";
+           case 5:   return "  F5     toggle wander component on/off.";
+           }
+
+           return NULL; 
+        }
+
         void printMiniHelpForFunctionKeys (void)
         {
             std::ostringstream message;
             message << "Function keys handled by ";
             message << '"' << name() << '"' << ':' << std::ends;
             OpenSteerDemo::printMessage (message);
-            OpenSteerDemo::printMessage (message);
-            OpenSteerDemo::printMessage ("  F1     add a pedestrian to the crowd.");
-            OpenSteerDemo::printMessage ("  F2     remove a pedestrian from crowd.");
-            OpenSteerDemo::printMessage ("  F3     use next proximity database.");
-            OpenSteerDemo::printMessage ("  F4     toggle directed path follow.");
-            OpenSteerDemo::printMessage ("  F5     toggle wander component on/off.");
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(1));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(2));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(3));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(4));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(5));
             OpenSteerDemo::printMessage ("");
         }
 

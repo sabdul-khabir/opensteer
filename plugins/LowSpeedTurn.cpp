@@ -209,7 +209,7 @@ namespace {
                        << std::setiosflags (std::ios::fixed)
                        << agent.speed()
                        << std::ends;
-                draw2dTextAt3dLocation (annote, textPosition, textColor, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (annote, textPosition, textColor, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
 
             // highlight vehicle nearest mouse

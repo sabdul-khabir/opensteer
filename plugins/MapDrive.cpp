@@ -2714,35 +2714,35 @@ namespace {
             qqqRange ("L  ", vehicle->savedNearestL,  status);
             qqqRange ("WL ", vehicle->savedNearestWL, status);
             status << std::ends;
-            const float h = drawGetWindowHeight ();
+            const float h = OpenSteerDemo::drawGetWindowHeight ();
             const Vec3 screenLocation (10, h-50, 0);
             const Color color (0.15f, 0.15f, 0.5f);
-            draw2dTextAt2dLocation (status, screenLocation, color, drawGetWindowWidth(), drawGetWindowHeight());
+            draw2dTextAt2dLocation (status, screenLocation, color, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
 
             {
                 const float v = 5;
                 const float m = 10;
-                const float w = drawGetWindowWidth ();
+                const float w = OpenSteerDemo::drawGetWindowWidth ();
                 const float f = w - (2 * m);
                 const float spd = vehicle->relativeSpeed ();
 
                 // limit tick mark
                 const float l = vehicle->annoteMaxRelSpeed;
-                draw2dLine (Vec3 (m+(f*l), v-3, 0), Vec3 (m+(f*l),v+3, 0), gBlack, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dLine (Vec3 (m+(f*l), v-3, 0), Vec3 (m+(f*l),v+3, 0), gBlack, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
                 // two "inverse speedometers" showing limits due to curvature and
                 // path alignment
                 if (l!=0)
                 {
                     const float c = vehicle->annoteMaxRelSpeedCurve;
                     const float p = vehicle->annoteMaxRelSpeedPath;
-                    draw2dLine (Vec3(m+(f*c), v+1, 0), Vec3(w-m, v+1, 0), gRed, drawGetWindowWidth(), drawGetWindowHeight());
-                    draw2dLine (Vec3(m+(f*p), v-2, 0), Vec3(w-m, v-1, 0), gGreen, drawGetWindowWidth(), drawGetWindowHeight());
+                    draw2dLine (Vec3(m+(f*c), v+1, 0), Vec3(w-m, v+1, 0), gRed, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
+                    draw2dLine (Vec3(m+(f*p), v-2, 0), Vec3(w-m, v-1, 0), gGreen, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
                 }
                 // speedometer: horizontal line with length proportional to speed
-                draw2dLine (Vec3 (m, v, 0), Vec3 (m + (f * spd), v, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dLine (Vec3 (m, v, 0), Vec3 (m + (f * spd), v, 0), gWhite, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
                 // min and max tick marks
-                draw2dLine (Vec3 (m,       v, 0), Vec3 (m,      v-2, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
-                draw2dLine (Vec3 (w-m,     v, 0), Vec3 (w-m,    v-2, 0), gWhite, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dLine (Vec3 (m,       v, 0), Vec3 (m,      v-2, 0), gWhite, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
+                draw2dLine (Vec3 (w-m,     v, 0), Vec3 (w-m,    v-2, 0), gWhite, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
         }
 
@@ -2800,17 +2800,33 @@ namespace {
             }
         }
 
+        const char* getFunctionKeyHelp(int keyNumber)
+        {
+           switch (keyNumber)
+           {
+           case 1:   return "  F1     select next driving demo.";
+           case 2:   return "  F2     reverse path following direction.";
+           case 3:   return "  F3     toggle path fences.";
+           case 4:   return "  F4     toggle random rock clumps.";
+           case 5:   return "  F5     toggle curved prediction.";
+           case 6:   return "  F6     draw an enclosed \"pen\" of obstacles to test cycle-stuck.";
+           }
+
+           return NULL;
+        }
+
         void printMiniHelpForFunctionKeys (void)
         {
             std::ostringstream message;
             message << "Function keys handled by ";
             message << '"' << name() << '"' << ':' << std::ends;
             OpenSteerDemo::printMessage (message);
-            OpenSteerDemo::printMessage ("  F1     select next driving demo.");
-            OpenSteerDemo::printMessage ("  F2     reverse path following direction.");
-            OpenSteerDemo::printMessage ("  F3     toggle path fences.");
-            OpenSteerDemo::printMessage ("  F4     toggle random rock clumps.");
-            OpenSteerDemo::printMessage ("  F5     toggle curved prediction.");
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(1));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(2));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(3));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(4));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(5));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(6));
             OpenSteerDemo::printMessage ("");
         }
 

@@ -1,3 +1,5 @@
+
+
 // ----------------------------------------------------------------------------
 //
 //
@@ -25,36 +27,48 @@
 // DEALINGS IN THE SOFTWARE.
 //
 //
-// ------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //
 //
-// Main: top level routine for OpenSteerDemo application
+// glutInitialize
 //
-//  5-29-02 cwr: created
+// Initialize glut and set callbacks.
+// 
+//
+// 01-19-25 sak:  Break functions to a new file
 //
 //
-// ------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 
-#include "OpenSteerDemo.h"        // OpenSteerDemo application
-#include "Draw.h"                 // OpenSteerDemo graphics
-#include "glutInitialize.h"
-// To include EXIT_SUCCESS
-#include <cstdlib>
+#ifndef OPENSTEER_GLUTINITIALIZE_H
+#define OPENSTEER_GLUTINITIALIZE_H
+
+namespace OpenSteer {
+
+    // ----------------------------------------------------------------------------
+    // do all initialization related to graphics
 
 
-int main (int argc, char **argv) 
-{
-    // initialize OpenSteerDemo application
-    OpenSteer::OpenSteerDemo::initialize ();
-
-    // initialize graphics
-    OpenSteer::initializeGraphics (argc, argv);
-
-    // run the main event processing loop
-    OpenSteer::runGraphics ();  
-    return EXIT_SUCCESS;
-}
+    void initializeGraphics (int argc, char **argv);
 
 
-// ------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    // run graphics event loop
+
+
+    void runGraphics (void);
+
+
+    // ----------------------------------------------------------------------------
+    // accessors for GLUT's window dimensions
+
+
+    float drawGetWindowHeight (void);
+    float drawGetWindowWidth (void);
+
+} // namespace OpenSteer
+
+
+// ----------------------------------------------------------------------------
+#endif // OPENSTEER_GLUTINITIALIZE_H

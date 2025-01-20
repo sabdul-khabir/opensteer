@@ -428,9 +428,9 @@ namespace {
                 status << "inside a box" ; break;
             }
             status << std::endl;
-            const float h = drawGetWindowHeight ();
+            const float h = OpenSteerDemo::drawGetWindowHeight ();
             const Vec3 screenLocation (10, h-50, 0);
-            draw2dTextAt2dLocation (status, screenLocation, gGray80, drawGetWindowWidth(), drawGetWindowHeight());
+            draw2dTextAt2dLocation (status, screenLocation, gGray80, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
 
             drawObstacles ();
         }
@@ -525,16 +525,29 @@ namespace {
     #endif // NO_LQ_BIN_STATS
         }
      
+        const char* getFunctionKeyHelp(int keyNumber)
+        {
+           switch (keyNumber)
+           {
+           case 1:   return "  F1     add a boid to the flock.";
+           case 2:   return "  F2     remove a boid from the flock.";
+           case 3:   return "  F3     use next proximity database.";
+           case 4:   return "  F4     next flock boundary condition.";
+           }
+
+           return NULL;
+        }
+
         void printMiniHelpForFunctionKeys (void)
         {
             std::ostringstream message;
             message << "Function keys handled by ";
             message << '"' << name() << '"' << ':' << std::ends;
             OpenSteerDemo::printMessage (message);
-            OpenSteerDemo::printMessage ("  F1     add a boid to the flock.");
-            OpenSteerDemo::printMessage ("  F2     remove a boid from the flock.");
-            OpenSteerDemo::printMessage ("  F3     use next proximity database.");
-            OpenSteerDemo::printMessage ("  F4     next flock boundary condition.");
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(1));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(2));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(3));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(4));
             OpenSteerDemo::printMessage ("");
         }
 

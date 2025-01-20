@@ -690,16 +690,16 @@ namespace {
         annote << seekerStateString << std::endl;
         annote << std::setprecision(2) << std::setiosflags(std::ios::fixed)
                << speed() << std::ends;
-        draw2dTextAt3dLocation (annote, textOrigin, gWhite, drawGetWindowWidth(), drawGetWindowHeight());
+        draw2dTextAt3dLocation (annote, textOrigin, gWhite, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
 
         // display status in the upper left corner of the window
         std::ostringstream status;
         status << seekerStateString << std::endl;
         status << obstacleCount << " obstacles [F1/F2]" << std::endl;
         status << resetCount << " restarts" << std::ends;
-        const float h = drawGetWindowHeight ();
+        const float h = OpenSteerDemo::drawGetWindowHeight ();
         const Vec3 screenLocation (10, h-50, 0);
-        draw2dTextAt2dLocation (status, screenLocation, gGray80, drawGetWindowWidth(), drawGetWindowHeight());
+        draw2dTextAt2dLocation (status, screenLocation, gGray80, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
     }
 
 
@@ -946,14 +946,25 @@ namespace {
             }
         }
 
+        const char* getFunctionKeyHelp(int keyNumber)
+        {
+           switch (keyNumber)
+           {
+           case 1:   return "  F1     add one obstacle.";
+           case 2:   return "  F2     remove one obstacle.";
+           }
+
+           return NULL;
+        }
+
         void printMiniHelpForFunctionKeys (void)
         {
             std::ostringstream message;
             message << "Function keys handled by ";
             message << '"' << name() << '"' << ':' << std::ends;
             OpenSteerDemo::printMessage (message);
-            OpenSteerDemo::printMessage ("  F1     add one obstacle.");
-            OpenSteerDemo::printMessage ("  F2     remove one obstacle.");
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(1));
+            OpenSteerDemo::printMessage (getFunctionKeyHelp(2));
             OpenSteerDemo::printMessage ("");
         }
 

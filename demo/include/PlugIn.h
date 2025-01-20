@@ -111,6 +111,9 @@ namespace OpenSteer {
         // print "mini help" documenting function keys handled by this PlugIn
         virtual void printMiniHelpForFunctionKeys (void) = 0;
 
+        // returns a help string for the specified function key
+        virtual const char* getFunctionKeyHelp(int keyNumber) = 0;
+
         // return an AVGroup (an STL vector of AbstractVehicle pointers) of
         // all vehicles(/agents/characters) defined by the PlugIn
         virtual const AVGroup& allVehicles (void) = 0;
@@ -147,6 +150,8 @@ namespace OpenSteer {
 
         // default "mini help": print nothing
         void printMiniHelpForFunctionKeys (void) {}
+
+        const char* getFunctionKeyHelp(int /*keyNumber*/) { return NULL; }
 
         // returns pointer to the next PlugIn in "selection order"
         PlugIn* next (void);

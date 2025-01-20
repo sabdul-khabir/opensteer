@@ -328,12 +328,12 @@ namespace {
             {
                 std::ostringstream annote;
                 annote << "Red: "<< m_redScore;
-                draw2dTextAt3dLocation (annote, Vec3(23,0,0), Color(1.0f,0.7f,0.7f), drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (annote, Vec3(23,0,0), Color(1.0f,0.7f,0.7f), OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
             {
                 std::ostringstream annote;
                 annote << "Blue: "<< m_blueScore;
-                draw2dTextAt3dLocation (annote, Vec3(-23,0,0), Color(0.7f,0.7f,1.0f), drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (annote, Vec3(-23,0,0), Color(0.7f,0.7f,1.0f), OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
 
             // textual annotation (following the test vehicle's screen position)
@@ -343,8 +343,8 @@ namespace {
                 std::ostringstream annote;
                 annote << std::setprecision (2) << std::setiosflags (std::ios::fixed);
                 annote << "      speed: " << TeamA[i]->speed() << "ID:" << i << std::ends;
-                draw2dTextAt3dLocation (annote, TeamA[i]->position(), gRed, drawGetWindowWidth(), drawGetWindowHeight());
-                draw2dTextAt3dLocation (*"start", Vec3::zero, gGreen, drawGetWindowWidth(), drawGetWindowHeight());
+                draw2dTextAt3dLocation (annote, TeamA[i]->position(), gRed, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
+                draw2dTextAt3dLocation (*"start", Vec3::zero, gGreen, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
             }
             // update camera, tracking test vehicle
             OpenSteerDemo::updateCamera (currentTime, elapsedTime, OpenSteerDemo::selectedVehicle);

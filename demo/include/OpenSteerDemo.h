@@ -106,6 +106,8 @@ namespace OpenSteer {
         // handle function keys an a per-plug-in basis
         static void functionKeyForPlugIn (int keyNumber);
 
+        static const char* getFunctionKeyHelp(int keyNumber);
+
         // return name of currently selected plug-in
         static const char* nameOfSelectedPlugIn (void);
 
@@ -247,6 +249,11 @@ namespace OpenSteer {
         // print list of known commands
         static void keyboardMiniHelp (void);
 
+        // returns nth help string for demo key commands
+        static const char* getDemoKeyHelp(int nth);
+
+        static float drawGetWindowHeight(void);
+        static float drawGetWindowWidth(void);
         // ---------------------------------------------------------------- private
 
     private:
@@ -270,27 +277,6 @@ namespace OpenSteer {
         static const int updatePhase;
         static const int overheadPhase;
     };
-
-    // ----------------------------------------------------------------------------
-    // do all initialization related to graphics
-
-
-    void initializeGraphics (int argc, char **argv);
-
-
-    // ----------------------------------------------------------------------------
-    // run graphics event loop
-
-
-    void runGraphics (void);
-
-
-    // ----------------------------------------------------------------------------
-    // accessors for GLUT's window dimensions
-
-
-    float drawGetWindowHeight (void);
-    float drawGetWindowWidth (void);
 
 } // namespace OpenSteer
     

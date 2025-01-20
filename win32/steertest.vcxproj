@@ -193,6 +193,8 @@ copy "$(TargetPath)" "$(ProjectDir)bin\$(Configuration)"
     <ClCompile Include="..\demo\Clock.cpp" />
     <ClCompile Include="..\demo\Color.cpp" />
     <ClCompile Include="..\demo\Draw.cpp" />
+    <ClCompile Include="..\demo\glutCallbacks.cpp" />
+    <ClCompile Include="..\demo\glutInitialize.cpp" />
     <ClCompile Include="..\demo\main.cpp" />
     <ClCompile Include="..\demo\OldPathway.cpp" />
     <ClCompile Include="..\demo\OpenSteerDemo.cpp" />
@@ -214,6 +216,8 @@ copy "$(TargetPath)" "$(ProjectDir)bin\$(Configuration)"
     <ClInclude Include="..\demo\include\Clock.h" />
     <ClInclude Include="..\demo\include\Color.h" />
     <ClInclude Include="..\demo\include\Draw.h" />
+    <ClInclude Include="..\demo\include\glutCallbacks.h" />
+    <ClInclude Include="..\demo\include\glutInitialize.h" />
     <ClInclude Include="..\demo\include\OldPathway.h" />
     <ClInclude Include="..\demo\include\OpenSteerDemo.h" />
     <ClInclude Include="..\demo\include\PlugIn.h" />
