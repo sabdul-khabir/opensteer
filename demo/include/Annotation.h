@@ -262,7 +262,7 @@ AnnotationMixin<Super>::setTrailParameters (const float duration,
 
     // prepare trailVertices array: free old one if needed, allocate new one
     delete[] trailVertices;
-    trailVertices = new Vec3[trailVertexCount];
+    trailVertices = new OpenSteer::Vec3[trailVertexCount];
 
     // prepare trailFlags array: free old one if needed, allocate new one
     delete[] trailFlags;

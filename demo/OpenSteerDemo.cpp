@@ -406,14 +406,23 @@ OpenSteerDemo::selectNextVehicle (void)
         // find selected vehicle in container
         const OpenSteer::AVIterator s = std::find (first, last, selectedVehicle);
 
-        // normally select the next vehicle in container
-        selectedVehicle = *(s+1);
-
         // if we are at the end of the container, select the first vehicle
-        if (s == last-1) selectedVehicle = *first;
+        if (s == last - 1) 
+        {
+           selectedVehicle = *first; 
+           return;
+        }
 
         // if the search failed, use NULL
-        if (s == last) selectedVehicle = NULL;
+        if (s == last) 
+        {
+           selectedVehicle = NULL; 
+           return;
+        }
+
+        // normally select the next vehicle in container
+        selectedVehicle = *(s + 1);
+
     }
 }
 

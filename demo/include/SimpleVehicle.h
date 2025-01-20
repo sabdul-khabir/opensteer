@@ -68,13 +68,11 @@
 #include "OpenSteer/SteerLibrary.h"
 #include "Annotation.h"
 
-   using namespace OpenSteer;
-
     // ----------------------------------------------------------------------------
 
 
     // SimpleVehicle_1 adds concrete LocalSpace methods to AbstractVehicle
-    typedef LocalSpaceMixin<AbstractVehicle> SimpleVehicle_1;
+    typedef OpenSteer::LocalSpaceMixin<OpenSteer::AbstractVehicle> SimpleVehicle_1;
 
 
     // SimpleVehicle_2 adds concrete annotation methods to SimpleVehicle_1
@@ -82,7 +80,7 @@
 
 
     // SimpleVehicle_3 adds concrete steering methods to SimpleVehicle_2
-    typedef SteerLibraryMixin<SimpleVehicle_2> SimpleVehicle_3;
+    typedef OpenSteer::SteerLibraryMixin<SimpleVehicle_2> SimpleVehicle_3;
 
 
     // SimpleVehicle adds concrete vehicle methods to SimpleVehicle_3
@@ -100,7 +98,7 @@
         void reset (void)
         {
             // reset LocalSpace state
-            resetLocalSpace ();
+           resetLocalSpace ();
 
             // reset SteerLibraryMixin state
             // (XXX this seems really fragile, needs to be redesigned XXX)
@@ -215,7 +213,7 @@
         void randomizeHeadingOnXZPlane (void)
         {
             setUp (OpenSteer::Vec3::up);
-            setForward (RandomUnitVectorOnXZPlane ());
+            setForward (OpenSteer::RandomUnitVectorOnXZPlane ());
             setSide (localRotateForwardToSide (forward()));
         }
 

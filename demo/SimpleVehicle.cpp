@@ -107,12 +107,12 @@ SimpleVehicle::~SimpleVehicle (void)
 
 
 OpenSteer::Vec3 
-SimpleVehicle::adjustRawSteeringForce (const Vec3& force,
+SimpleVehicle::adjustRawSteeringForce (const OpenSteer::Vec3& force,
                                                   const float /* deltaTime */)
 {
     const float maxAdjustedSpeed = 0.2f * maxSpeed ();
 
-    if ((speed () > maxAdjustedSpeed) || (force == Vec3::zero))
+    if ((speed () > maxAdjustedSpeed) || (force == OpenSteer::Vec3::zero))
     {
         return force;
     }
@@ -124,7 +124,7 @@ SimpleVehicle::adjustRawSteeringForce (const Vec3& force,
         // const float cosine = interpolate (pow (range, 20), 1.0f, -1.0f);
         // const float cosine = interpolate (pow (range, 100), 1.0f, -1.0f);
         // const float cosine = interpolate (pow (range, 50), 1.0f, -1.0f);
-        const float cosine = interpolate (pow (range, 20), 1.0f, -1.0f);
+        const float cosine = OpenSteer::interpolate (pow (range, 20), 1.0f, -1.0f);
         return limitMaxDeviationAngle (force, cosine, forward());
     }
 }
@@ -163,25 +163,25 @@ SimpleVehicle::applyBrakingForce (const float rate, const float deltaTime)
 
 
 void 
-SimpleVehicle::applySteeringForce (const Vec3& force,
+SimpleVehicle::applySteeringForce (const OpenSteer::Vec3& force,
                                               const float elapsedTime)
 {
 
-    const Vec3 adjustedForce = adjustRawSteeringForce (force, elapsedTime);
+    const OpenSteer::Vec3 adjustedForce = adjustRawSteeringForce (force, elapsedTime);
 
     // enforce limit on magnitude of steering force
-    const Vec3 clippedForce = adjustedForce.truncateLength (maxForce ());
+    const OpenSteer::Vec3 clippedForce = adjustedForce.truncateLength (maxForce ());
 
     // compute acceleration and velocity
-    Vec3 newAcceleration = (clippedForce / mass());
-    Vec3 newVelocity = velocity();
+    OpenSteer::Vec3 newAcceleration = (clippedForce / mass());
+    OpenSteer::Vec3 newVelocity = velocity();
 
     // damp out abrupt changes and oscillations in steering acceleration
     // (rate is proportional to time step, then clipped into useful range)
     if (elapsedTime > 0)
     {
-        const float smoothRate = clip (9 * elapsedTime, 0.15f, 0.4f);
-        blendIntoAccumulator (smoothRate,
+        const float smoothRate = OpenSteer::clip (9 * elapsedTime, 0.15f, 0.4f);
+        OpenSteer::blendIntoAccumulator (smoothRate,
                               newAcceleration,
                               _smoothedAcceleration);
     }
@@ -206,7 +206,7 @@ SimpleVehicle::applySteeringForce (const Vec3& force,
     measurePathCurvature (elapsedTime);
 
     // running average of recent positions
-    blendIntoAccumulator (elapsedTime * 0.06f, // QQQ
+    OpenSteer::blendIntoAccumulator (elapsedTime * 0.06f, // QQQ
                           position (),
                           _smoothedPosition);
 }
@@ -220,7 +220,7 @@ SimpleVehicle::applySteeringForce (const Vec3& force,
 
 
 void 
-SimpleVehicle::regenerateLocalSpace (const Vec3& newVelocity,
+SimpleVehicle::regenerateLocalSpace (const OpenSteer::Vec3& newVelocity,
                                                 const float /* elapsedTime */)
 {
     // adjust orthonormal basis vectors to be aligned with new velocity
@@ -237,23 +237,23 @@ SimpleVehicle::regenerateLocalSpace (const Vec3& newVelocity,
 
 
 void 
-SimpleVehicle::regenerateLocalSpaceForBanking (const Vec3& newVelocity,
+SimpleVehicle::regenerateLocalSpaceForBanking (const OpenSteer::Vec3& newVelocity,
                                                           const float elapsedTime)
 {
     // the length of this global-upward-pointing vector controls the vehicle's
     // tendency to right itself as it is rolled over from turning acceleration
-    const Vec3 globalUp (0, 0.2f, 0);
+    const OpenSteer::Vec3 globalUp (0, 0.2f, 0);
 
     // acceleration points toward the center of local path curvature, the
     // length determines how much the vehicle will roll while turning
-    const Vec3 accelUp = _smoothedAcceleration * 0.05f;
+    const OpenSteer::Vec3 accelUp = _smoothedAcceleration * 0.05f;
 
     // combined banking, sum of UP due to turning and global UP
-    const Vec3 bankUp = accelUp + globalUp;
+    const OpenSteer::Vec3 bankUp = accelUp + globalUp;
 
     // blend bankUp into vehicle's UP basis vector
     const float smoothRate = elapsedTime * 3;
-    Vec3 tempUp = up();
+    OpenSteer::Vec3 tempUp = up();
     blendIntoAccumulator (smoothRate, bankUp, tempUp);
     setUp (tempUp.normalize());
 
@@ -276,12 +276,12 @@ SimpleVehicle::measurePathCurvature (const float elapsedTime)
 {
     if (elapsedTime > 0)
     {
-        const Vec3 dP = _lastPosition - position ();
-        const Vec3 dF = (_lastForward - forward ()) / dP.length ();
-        const Vec3 lateral = dF.perpendicularComponent (forward ());
+        const OpenSteer::Vec3 dP = _lastPosition - position ();
+        const OpenSteer::Vec3 dF = (_lastForward - forward ()) / dP.length ();
+        const OpenSteer::Vec3 lateral = dF.perpendicularComponent (forward ());
         const float sign = (lateral.dot (side ()) < 0) ? 1.0f : -1.0f;
         _curvature = lateral.length() * sign;
-        blendIntoAccumulator (elapsedTime * 4.0f,
+        OpenSteer::blendIntoAccumulator (elapsedTime * 4.0f,
                               _curvature,
                               _smoothedCurvature);
         _lastForward = forward ();
@@ -301,9 +301,9 @@ SimpleVehicle::annotationVelocityAcceleration (float maxLengthA,
     const float desat = 0.4f;
     const float aScale = maxLengthA / maxForce ();
     const float vScale = maxLengthV / maxSpeed ();
-    const Vec3& p = position();
-    const Color aColor (desat, desat, 1); // bluish
-    const Color vColor (    1, desat, 1); // pinkish
+    const OpenSteer::Vec3& p = position();
+    const OpenSteer::Color aColor (desat, desat, 1); // bluish
+    const OpenSteer::Color vColor (    1, desat, 1); // pinkish
 
     annotationLine (p, p + (velocity ()           * vScale), vColor);
     annotationLine (p, p + (_smoothedAcceleration * aScale), aColor);

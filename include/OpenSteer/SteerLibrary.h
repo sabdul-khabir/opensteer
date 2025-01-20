@@ -52,8 +52,6 @@
 #include "OpenSteer/Obstacle.h"
 #include "OpenSteer/Utilities.h"
 
-// Include OpenSteer::Color, OpenSteer::gBlack, ...
-//#include "Color.h"
 
 namespace OpenSteer {
 
