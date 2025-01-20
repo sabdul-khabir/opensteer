@@ -44,8 +44,6 @@
 #ifndef OPENSTEER_GLUTINITIALIZE_H
 #define OPENSTEER_GLUTINITIALIZE_H
 
-namespace OpenSteer {
-
     // ----------------------------------------------------------------------------
     // do all initialization related to graphics
 
@@ -66,8 +64,6 @@ namespace OpenSteer {
 
     float drawGetWindowHeight (void);
     float drawGetWindowWidth (void);
-
-} // namespace OpenSteer
 
 
 // ----------------------------------------------------------------------------

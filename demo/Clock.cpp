@@ -72,7 +72,7 @@
 // Constructor
 
 
-OpenSteer::Clock::Clock (void)
+Clock::Clock (void)
 {
     // default is "real time, variable frame rate" and not paused
     setFixedFrameRate (0);
@@ -132,7 +132,7 @@ OpenSteer::Clock::Clock (void)
 
 
 void 
-OpenSteer::Clock::update (void)
+Clock::update (void)
 {
     // keep track of average frame rate and average usage percentage
     updateSmoothedRegisters ();
@@ -195,7 +195,7 @@ OpenSteer::Clock::update (void)
 
 
 void 
-OpenSteer::Clock::frameRateSync (void)
+Clock::frameRateSync (void)
 {
     // when in real time fixed frame rate mode
     // (not animation mode and not variable frame rate mode)
@@ -222,7 +222,7 @@ OpenSteer::Clock::frameRateSync (void)
 
 
 float 
-OpenSteer::Clock::advanceSimulationTimeOneFrame (void)
+Clock::advanceSimulationTimeOneFrame (void)
 {
     // decide on what frame time is (use fixed rate, average for variable rate)
     const float fps = (getVariableFrameRateMode () ?
@@ -239,7 +239,7 @@ OpenSteer::Clock::advanceSimulationTimeOneFrame (void)
 
 
 void 
-OpenSteer::Clock::advanceSimulationTime (const float seconds)
+Clock::advanceSimulationTime (const float seconds)
 {
     if (seconds < 0) {
         /// @todo - throw? how to handle error conditions? Not by crashing an app!
@@ -271,7 +271,7 @@ namespace {
 } // anonymous namespace
 
 float 
-OpenSteer::Clock::realTimeSinceFirstClockUpdate (void)
+Clock::realTimeSinceFirstClockUpdate (void)
 #ifdef _WIN32
 {
     // get time from Windows

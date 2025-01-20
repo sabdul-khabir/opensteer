@@ -68,14 +68,14 @@
 // serial numbers  (XXX should this be part of a "OpenSteerDemo vehicle mixin"?)
 
 
-int OpenSteer::SimpleVehicle::serialNumberCounter = 0;
+int SimpleVehicle::serialNumberCounter = 0;
 
 
 // ----------------------------------------------------------------------------
 // constructor
 
 
-OpenSteer::SimpleVehicle::SimpleVehicle (void)
+SimpleVehicle::SimpleVehicle (void)
 {
     // set inital state
     reset ();
@@ -89,7 +89,7 @@ OpenSteer::SimpleVehicle::SimpleVehicle (void)
 // destructor
 
 
-OpenSteer::SimpleVehicle::~SimpleVehicle (void)
+SimpleVehicle::~SimpleVehicle (void)
 {
 }
 
@@ -107,7 +107,7 @@ OpenSteer::SimpleVehicle::~SimpleVehicle (void)
 
 
 OpenSteer::Vec3 
-OpenSteer::SimpleVehicle::adjustRawSteeringForce (const Vec3& force,
+SimpleVehicle::adjustRawSteeringForce (const Vec3& force,
                                                   const float /* deltaTime */)
 {
     const float maxAdjustedSpeed = 0.2f * maxSpeed ();
@@ -146,7 +146,7 @@ OpenSteer::SimpleVehicle::adjustRawSteeringForce (const Vec3& force,
 
 
 void 
-OpenSteer::SimpleVehicle::applyBrakingForce (const float rate, const float deltaTime)
+SimpleVehicle::applyBrakingForce (const float rate, const float deltaTime)
 {
     const float rawBraking = speed () * rate;
     const float clipBraking = ((rawBraking < maxForce ()) ?
@@ -163,7 +163,7 @@ OpenSteer::SimpleVehicle::applyBrakingForce (const float rate, const float delta
 
 
 void 
-OpenSteer::SimpleVehicle::applySteeringForce (const Vec3& force,
+SimpleVehicle::applySteeringForce (const Vec3& force,
                                               const float elapsedTime)
 {
 
@@ -220,7 +220,7 @@ OpenSteer::SimpleVehicle::applySteeringForce (const Vec3& force,
 
 
 void 
-OpenSteer::SimpleVehicle::regenerateLocalSpace (const Vec3& newVelocity,
+SimpleVehicle::regenerateLocalSpace (const Vec3& newVelocity,
                                                 const float /* elapsedTime */)
 {
     // adjust orthonormal basis vectors to be aligned with new velocity
@@ -237,7 +237,7 @@ OpenSteer::SimpleVehicle::regenerateLocalSpace (const Vec3& newVelocity,
 
 
 void 
-OpenSteer::SimpleVehicle::regenerateLocalSpaceForBanking (const Vec3& newVelocity,
+SimpleVehicle::regenerateLocalSpaceForBanking (const Vec3& newVelocity,
                                                           const float elapsedTime)
 {
     // the length of this global-upward-pointing vector controls the vehicle's
@@ -272,7 +272,7 @@ OpenSteer::SimpleVehicle::regenerateLocalSpaceForBanking (const Vec3& newVelocit
 
 
 void 
-OpenSteer::SimpleVehicle::measurePathCurvature (const float elapsedTime)
+SimpleVehicle::measurePathCurvature (const float elapsedTime)
 {
     if (elapsedTime > 0)
     {
@@ -295,7 +295,7 @@ OpenSteer::SimpleVehicle::measurePathCurvature (const float elapsedTime)
 
 
 void 
-OpenSteer::SimpleVehicle::annotationVelocityAcceleration (float maxLengthA, 
+SimpleVehicle::annotationVelocityAcceleration (float maxLengthA, 
                                                           float maxLengthV)
 {
     const float desat = 0.4f;
@@ -321,7 +321,7 @@ OpenSteer::SimpleVehicle::annotationVelocityAcceleration (float maxLengthA,
 
 
 OpenSteer::Vec3 
-OpenSteer::SimpleVehicle::predictFuturePosition (const float predictionTime) const
+SimpleVehicle::predictFuturePosition (const float predictionTime) const
 {
     return position() + (velocity() * predictionTime);
 }

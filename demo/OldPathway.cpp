@@ -46,8 +46,8 @@
 // an array of points, and a path radius.
 
 
-OpenSteer::Old::PolylinePathway::PolylinePathway (const int _pointCount,
-                                                  const Vec3 _points[],
+Old::PolylinePathway::PolylinePathway (const int _pointCount,
+                                                  const OpenSteer::Vec3 _points[],
                                                   const float _radius,
                                                   const bool _cyclic)
 {
@@ -60,8 +60,8 @@ OpenSteer::Old::PolylinePathway::PolylinePathway (const int _pointCount,
 
 
 void 
-OpenSteer::Old::PolylinePathway::initialize (const int _pointCount,
-                                             const Vec3 _points[],
+Old::PolylinePathway::initialize (const int _pointCount,
+                                             const OpenSteer::Vec3 _points[],
                                              const float _radius,
                                              const bool _cyclic)
 {
@@ -71,8 +71,8 @@ OpenSteer::Old::PolylinePathway::initialize (const int _pointCount,
     pointCount = _pointCount;
     if (cyclic) pointCount++;
     lengths = new float    [pointCount];
-    points  = new Vec3 [pointCount];
-    normals = new Vec3 [pointCount];
+    points  = new OpenSteer::Vec3 [pointCount];
+    normals = new OpenSteer::Vec3 [pointCount];
 
     // loop over all points
     for (int i = 0; i < pointCount; i++)
@@ -89,7 +89,7 @@ OpenSteer::Old::PolylinePathway::initialize (const int _pointCount,
 // utility for constructors
 
 void 
-OpenSteer::Old::PolylinePathway::setupLengths ()
+Old::PolylinePathway::setupLengths ()
 {
      totalPathLength = 0;
    // loop over all points
@@ -115,9 +115,9 @@ OpenSteer::Old::PolylinePathway::setupLengths ()
 // move existing points safely
 
 void 
-OpenSteer::Old::PolylinePathway::movePoints (const int _firstPoint,
+Old::PolylinePathway::movePoints (const int _firstPoint,
                                              const int _numPoints,
-                                             const Vec3 _points[])
+                                             const OpenSteer::Vec3 _points[])
 {
     // loop over all points
     for (int i = _firstPoint; i < _firstPoint + _numPoints; i++)
@@ -142,13 +142,13 @@ OpenSteer::Old::PolylinePathway::movePoints (const int _firstPoint,
 
 
 OpenSteer::Vec3 
-OpenSteer::Old::PolylinePathway::mapPointToPath (const Vec3& point,
-                                                 Vec3& tangent,
+Old::PolylinePathway::mapPointToPath (const OpenSteer::Vec3& point,
+   OpenSteer::Vec3& tangent,
                                                  float& outside)
 {
     float d;
     float minDistance = FLT_MAX;
-    Vec3 onPath;
+    OpenSteer::Vec3 onPath;
 
     // loop over all segments, find the one nearest to the given point
     for (int i = 1; i < pointCount; i++)
@@ -165,7 +165,7 @@ OpenSteer::Old::PolylinePathway::mapPointToPath (const Vec3& point,
     }
 
     // measure how far original point is outside the Pathway's "tube"
-    outside = Vec3::distance (onPath, point) - radius;
+    outside = OpenSteer::Vec3::distance (onPath, point) - radius;
 
     // return point on path
     return onPath;
@@ -177,7 +177,7 @@ OpenSteer::Old::PolylinePathway::mapPointToPath (const Vec3& point,
 
 
 float 
-OpenSteer::Old::PolylinePathway::mapPointToPathDistance (const Vec3& point)
+Old::PolylinePathway::mapPointToPathDistance (const OpenSteer::Vec3& point)
 {
     float d;
     float minDistance = FLT_MAX;
@@ -207,7 +207,7 @@ OpenSteer::Old::PolylinePathway::mapPointToPathDistance (const Vec3& point)
 
 
 OpenSteer::Vec3 
-OpenSteer::Old::PolylinePathway::mapPathDistanceToPoint (float pathDistance)
+Old::PolylinePathway::mapPathDistanceToPoint (float pathDistance)
 {
     // clip or wrap given path distance according to cyclic flag
     float remaining = pathDistance;
@@ -224,7 +224,7 @@ OpenSteer::Old::PolylinePathway::mapPathDistanceToPoint (float pathDistance)
     // step through segments, subtracting off segment lengths until
     // locating the segment that contains the original pathDistance.
     // Interpolate along that segment to find 3d point value to return.
-    Vec3 result;
+    OpenSteer::Vec3 result;
     for (int i = 1; i < pointCount; i++)
     {
         segmentLength = lengths[i];
@@ -251,9 +251,9 @@ OpenSteer::Old::PolylinePathway::mapPathDistanceToPoint (float pathDistance)
 
 
 float 
-OpenSteer::Old::PolylinePathway::pointToSegmentDistance (const Vec3& point,
-                                                         const Vec3& ep0,
-                                                         const Vec3& ep1)
+Old::PolylinePathway::pointToSegmentDistance (const OpenSteer::Vec3& point,
+                                                         const OpenSteer::Vec3& ep0,
+                                                         const OpenSteer::Vec3& ep1)
 {
     // convert the test point to be "local" to ep0
     local = point - ep0;
@@ -267,19 +267,19 @@ OpenSteer::Old::PolylinePathway::pointToSegmentDistance (const Vec3& point,
     {
         chosen = ep0;
         segmentProjection = 0;
-        return Vec3::distance (point, ep0);
+        return OpenSteer::Vec3::distance (point, ep0);
     }
     if (segmentProjection > segmentLength)
     {
         chosen = ep1;
         segmentProjection = segmentLength;
-        return Vec3::distance (point, ep1);
+        return OpenSteer::Vec3::distance (point, ep1);
     }
 
     // otherwise nearest point is projection point on segment
     chosen = segmentNormal * segmentProjection;
     chosen +=  ep0;
-    return Vec3::distance (point, chosen);
+    return OpenSteer::Vec3::distance (point, chosen);
 }
 
 

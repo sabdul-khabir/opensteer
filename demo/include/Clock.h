@@ -62,9 +62,6 @@
 	#include <windows.h>
 #endif
 
-
-namespace OpenSteer {
-
     class Clock
     {
     public:
@@ -130,9 +127,9 @@ namespace OpenSteer {
         {
             const float rate = getSmoothingRate ();
             if (elapsedRealTime > 0)
-                blendIntoAccumulator (rate, 1 / elapsedRealTime, smoothedFPS);
+               OpenSteer::blendIntoAccumulator (rate, 1 / elapsedRealTime, smoothedFPS);
             if (! getVariableFrameRateMode ())
-                blendIntoAccumulator (rate, getUsage (), smoothedUsage);
+               OpenSteer::blendIntoAccumulator (rate, getUsage (), smoothedUsage);
         }
     public:
         float getSmoothedFPS (void) const {return smoothedFPS;}
@@ -197,8 +194,6 @@ namespace OpenSteer {
         int baseRealTimeUsec;
     #endif
     };
-
-} // namespace OpenSteer
 
 
 // ----------------------------------------------------------------------------

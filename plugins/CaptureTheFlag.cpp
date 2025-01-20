@@ -298,12 +298,12 @@ namespace {
         Vec3 steer (0, 0, 0);
         if (gSeeker->state == running)
         {
-            const Vec3 avoidance =
+            const OpenSteer::Vec3 avoidance =
                 steerToAvoidObstacles (gAvoidancePredictTimeMin,
                                        (ObstacleGroup&) allObstacles);
 
             // saved for annotation
-            avoiding = (avoidance == Vec3::zero);
+            avoiding = (avoidance == OpenSteer::Vec3::zero);
 
             if (avoiding)
                 steer = steerForPursuit (*gSeeker, maxPredictionTime);

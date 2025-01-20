@@ -72,7 +72,7 @@ namespace {
     // ----------------------------------------------------------------------------
 
 
-    class Boid : public OpenSteer::SimpleVehicle
+    class Boid : public SimpleVehicle
     {
     public:
 
@@ -151,12 +151,12 @@ namespace {
 
 
         // basic flocking
-        Vec3 steerToFlock (void)
+        OpenSteer::Vec3 steerToFlock (void)
         {
             // avoid obstacles if needed
             // XXX this should probably be moved elsewhere
-            const Vec3 avoidance = steerToAvoidObstacles (1.0f, obstacles);
-            if (avoidance != Vec3::zero) return avoidance;
+            const OpenSteer::Vec3 avoidance = steerToAvoidObstacles (1.0f, obstacles);
+            if (avoidance != OpenSteer::Vec3::zero) return avoidance;
 
             const float separationRadius =  5.0f;
             const float separationAngle  = -0.707f;
@@ -187,20 +187,20 @@ namespace {
     #endif // NO_LQ_BIN_STATS
 
             // determine each of the three component behaviors of flocking
-            const Vec3 separation = steerForSeparation (separationRadius,
+            const OpenSteer::Vec3 separation = steerForSeparation (separationRadius,
                                                         separationAngle,
                                                         neighbors);
-            const Vec3 alignment  = steerForAlignment  (alignmentRadius,
+            const OpenSteer::Vec3 alignment  = steerForAlignment  (alignmentRadius,
                                                         alignmentAngle,
                                                         neighbors);
-            const Vec3 cohesion   = steerForCohesion   (cohesionRadius,
+            const OpenSteer::Vec3 cohesion   = steerForCohesion   (cohesionRadius,
                                                         cohesionAngle,
                                                         neighbors);
 
             // apply weights to components (save in variables for annotation)
-            const Vec3 separationW = separation * separationWeight;
-            const Vec3 alignmentW = alignment * alignmentWeight;
-            const Vec3 cohesionW = cohesion * cohesionWeight;
+            const OpenSteer::Vec3 separationW = separation * separationWeight;
+            const OpenSteer::Vec3 alignmentW = alignment * alignmentWeight;
+            const OpenSteer::Vec3 cohesionW = cohesion * cohesionWeight;
 
             // annotation
             // const float s = 0.1;
@@ -219,7 +219,7 @@ namespace {
             if (position().length() > worldRadius)
             {
                 // wrap around (teleport)
-                setPosition (position().sphericalWrapAround (Vec3::zero,
+                setPosition (position().sphericalWrapAround (OpenSteer::Vec3::zero,
                                                              worldRadius));
                 if (this == OpenSteerDemo::selectedVehicle)
                 {
@@ -233,7 +233,7 @@ namespace {
 
     // ---------------------------------------------- xxxcwr111704_terrain_following
         // control orientation for this boid
-        void regenerateLocalSpace (const Vec3& newVelocity,
+        void regenerateLocalSpace (const OpenSteer::Vec3& newVelocity,
                                    const float elapsedTime)
         {
             // 3d flight with banking
@@ -247,20 +247,20 @@ namespace {
         // XXX experiment:
         // XXX   herd with terrain following
         // XXX   special case terrain: a sphere at the origin, radius 40
-        void regenerateLocalSpaceForTerrainFollowing  (const Vec3& newVelocity,
+        void regenerateLocalSpaceForTerrainFollowing  (const OpenSteer::Vec3& newVelocity,
                                                        const float /* elapsedTime */)
         {
 
             // XXX this is special case code, these should be derived from arguments //
-            const Vec3 surfaceNormal = position().normalize();                       //
-            const Vec3 surfacePoint = surfaceNormal * 40.0f;                         //
+            const OpenSteer::Vec3 surfaceNormal = position().normalize();                       //
+            const OpenSteer::Vec3 surfacePoint = surfaceNormal * 40.0f;                         //
             // XXX this is special case code, these should be derived from arguments //
 
-            const Vec3 newUp = surfaceNormal;
-            const Vec3 newPos = surfacePoint;
-            const Vec3 newVel = newVelocity.perpendicularComponent(newUp);
+            const OpenSteer::Vec3 newUp = surfaceNormal;
+            const OpenSteer::Vec3 newPos = surfacePoint;
+            const OpenSteer::Vec3 newVel = newVelocity.perpendicularComponent(newUp);
             const float newSpeed = newVel.length();
-            const Vec3 newFor = newVel / newSpeed;
+            const OpenSteer::Vec3 newFor = newVel / newSpeed;
 
             setSpeed (newSpeed);
             setPosition (newPos);
@@ -298,13 +298,13 @@ namespace {
         // xxx CaptureTheFlag.cpp
         void annotateAvoidObstacle (const float minDistanceToCollision)
         {
-            const Vec3 boxSide = side() * radius();
-            const Vec3 boxFront = forward() * minDistanceToCollision;
-            const Vec3 FR = position() + boxFront - boxSide;
-            const Vec3 FL = position() + boxFront + boxSide;
-            const Vec3 BR = position()            - boxSide;
-            const Vec3 BL = position()            + boxSide;
-            const Color white (1,1,1);
+            const OpenSteer::Vec3 boxSide = side() * radius();
+            const OpenSteer::Vec3 boxFront = forward() * minDistanceToCollision;
+            const OpenSteer::Vec3 FR = position() + boxFront - boxSide;
+            const OpenSteer::Vec3 FL = position() + boxFront + boxSide;
+            const OpenSteer::Vec3 BR = position()            - boxSide;
+            const OpenSteer::Vec3 BL = position()            + boxSide;
+            const OpenSteer::Color white (1,1,1);
             annotationLine (FR, FL, white);
             annotationLine (FL, BL, white);
             annotationLine (BL, BR, white);
@@ -429,7 +429,7 @@ namespace {
             }
             status << std::endl;
             const float h = OpenSteerDemo::drawGetWindowHeight ();
-            const Vec3 screenLocation (10, h-50, 0);
+            const OpenSteer::Vec3 screenLocation (10, h-50, 0);
             draw2dTextAt2dLocation (status, screenLocation, gGray80, OpenSteerDemo::drawGetWindowWidth(), OpenSteerDemo::drawGetWindowHeight());
 
             drawObstacles ();
@@ -471,11 +471,11 @@ namespace {
             {
             case 0:
                 {
-                    const Vec3 center;
+                    const OpenSteer::Vec3 center;
                     const float div = 10.0f;
-                    const Vec3 divisions (div, div, div);
+                    const OpenSteer::Vec3 divisions (div, div, div);
                     const float diameter = Boid::worldRadius * 1.1f * 2;
-                    const Vec3 dimensions (diameter, diameter, diameter);
+                    const OpenSteer::Vec3 dimensions (diameter, diameter, diameter);
                     typedef LQProximityDatabase<AbstractVehicle*> LQPDAV;
                     pd = new LQPDAV (center, dimensions, divisions);
                     break;
@@ -613,15 +613,15 @@ namespace {
         }
 
         class SO : public SphereObstacle
-        {void draw (const bool filled, const Color& color, const Vec3& vp) const
+        {void draw (const bool filled, const OpenSteer::Color& color, const OpenSteer::Vec3& vp) const
             {drawSphereObstacle (*this, 10.0f, filled, color, vp);}};
 
         class RO : public RectangleObstacle
-        {void draw (const bool, const Color& color, const Vec3&) const
+        {void draw (const bool, const OpenSteer::Color& color, const OpenSteer::Vec3&) const
             {tempDrawRectangle (*this, color);}};
 
         class BO : public BoxObstacle
-        {void draw (const bool, const Color& color, const Vec3&) const
+        {void draw (const bool, const OpenSteer::Color& color, const OpenSteer::Vec3&) const
             {tempDrawBox (*this, color);}};
 
         RO bigRectangle;
@@ -657,9 +657,9 @@ namespace {
             outsideSphere5.center.set (z, z, p);
             outsideSphere6.center.set (z, z, m);
 
-            const Vec3 tiltF = Vec3 (1.0f, 1.0f, 0.0f).normalize ();
-            const Vec3 tiltS (0.0f, 0.0f, 1.0f);
-            const Vec3 tiltU = Vec3 (-1.0f, 1.0f, 0.0f).normalize ();
+            const OpenSteer::Vec3 tiltF = OpenSteer::Vec3 (1.0f, 1.0f, 0.0f).normalize ();
+            const OpenSteer::Vec3 tiltS (0.0f, 0.0f, 1.0f);
+            const OpenSteer::Vec3 tiltU = OpenSteer::Vec3 (-1.0f, 1.0f, 0.0f).normalize ();
 
             bigRectangle.width = 50.0f;
             bigRectangle.height = 80.0f;
@@ -738,22 +738,22 @@ namespace {
             {
                 (**o).draw (false, // draw in wireframe
                             ((*o == &insideBigSphere) ?
-                             Color (0.2f, 0.2f, 0.4f) :
-                             Color (0.1f, 0.1f, 0.2f)),
+                               OpenSteer::Color (0.2f, 0.2f, 0.4f) :
+                               OpenSteer::Color (0.1f, 0.1f, 0.2f)),
                             OpenSteerDemo::camera.position ());
             }
         }
 
 
-        static void tempDrawRectangle (const RectangleObstacle& rect, const Color& color)
+        static void tempDrawRectangle (const RectangleObstacle& rect, const OpenSteer::Color& color)
         {
             float w = rect.width / 2;
             float h = rect.height / 2;
 
-            Vec3 v1 = rect.globalizePosition (Vec3 ( w,  h, 0));
-            Vec3 v2 = rect.globalizePosition (Vec3 (-w,  h, 0));
-            Vec3 v3 = rect.globalizePosition (Vec3 (-w, -h, 0));
-            Vec3 v4 = rect.globalizePosition (Vec3 ( w, -h, 0));
+            OpenSteer::Vec3 v1 = rect.globalizePosition (OpenSteer::Vec3 ( w,  h, 0));
+            OpenSteer::Vec3 v2 = rect.globalizePosition (OpenSteer::Vec3 (-w,  h, 0));
+            OpenSteer::Vec3 v3 = rect.globalizePosition (OpenSteer::Vec3 (-w, -h, 0));
+            OpenSteer::Vec3 v4 = rect.globalizePosition (OpenSteer::Vec3 ( w, -h, 0));
 
             drawLine (v1, v2, color);
             drawLine (v2, v3, color);
@@ -762,25 +762,25 @@ namespace {
         }
 
 
-        static void tempDrawBox (const BoxObstacle& box, const Color& color)
+        static void tempDrawBox (const BoxObstacle& box, const OpenSteer::Color& color)
         {
             const float w = box.width / 2;
             const float h = box.height / 2;
             const float d = box.depth / 2;
-            const Vec3 p = box.position ();
-            const Vec3 s = box.side ();
-            const Vec3 u = box.up ();
-            const Vec3 f = box.forward ();
+            const OpenSteer::Vec3 p = box.position ();
+            const OpenSteer::Vec3 s = box.side ();
+            const OpenSteer::Vec3 u = box.up ();
+            const OpenSteer::Vec3 f = box.forward ();
 
-            const Vec3 v1 = box.globalizePosition (Vec3 ( w,  h,  d));
-            const Vec3 v2 = box.globalizePosition (Vec3 (-w,  h,  d));
-            const Vec3 v3 = box.globalizePosition (Vec3 (-w, -h,  d));
-            const Vec3 v4 = box.globalizePosition (Vec3 ( w, -h,  d));
+            const OpenSteer::Vec3 v1 = box.globalizePosition (OpenSteer::Vec3 ( w,  h,  d));
+            const OpenSteer::Vec3 v2 = box.globalizePosition (OpenSteer::Vec3 (-w,  h,  d));
+            const OpenSteer::Vec3 v3 = box.globalizePosition (OpenSteer::Vec3 (-w, -h,  d));
+            const OpenSteer::Vec3 v4 = box.globalizePosition (OpenSteer::Vec3 ( w, -h,  d));
 
-            const Vec3 v5 = box.globalizePosition (Vec3 ( w,  h, -d));
-            const Vec3 v6 = box.globalizePosition (Vec3 (-w,  h, -d));
-            const Vec3 v7 = box.globalizePosition (Vec3 (-w, -h, -d));
-            const Vec3 v8 = box.globalizePosition (Vec3 ( w, -h, -d));
+            const OpenSteer::Vec3 v5 = box.globalizePosition (OpenSteer::Vec3 ( w,  h, -d));
+            const OpenSteer::Vec3 v6 = box.globalizePosition (OpenSteer::Vec3 (-w,  h, -d));
+            const OpenSteer::Vec3 v7 = box.globalizePosition (OpenSteer::Vec3 (-w, -h, -d));
+            const OpenSteer::Vec3 v8 = box.globalizePosition (OpenSteer::Vec3 ( w, -h, -d));
 
             drawLine (v1, v2, color);
             drawLine (v2, v3, color);

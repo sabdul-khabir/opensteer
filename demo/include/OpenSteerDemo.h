@@ -52,13 +52,7 @@
 #include "PlugIn.h"
 #include "Camera.h"
 #include "OpenSteer/Utilities.h"
-
-
-namespace OpenSteer {
-
-    class Color;
-    class Vec3;
-    
+#include "OpenSteer/Color.h"
 
     class OpenSteerDemo
     {
@@ -79,7 +73,7 @@ namespace OpenSteer {
         // currently selected vehicle.  Generally the one the camera follows and
         // for which additional information may be displayed.  Clicking the mouse
         // near a vehicle causes it to become the Selected Vehicle.
-        static AbstractVehicle* selectedVehicle;
+        static OpenSteer::AbstractVehicle* selectedVehicle;
 
         // -------------------------------------------- initialize, update and exit
 
@@ -128,7 +122,7 @@ namespace OpenSteer {
         // reset the currently selected plug-in
         static void resetSelectedPlugIn (void);
 
-        static const AVGroup& allVehiclesOfSelectedPlugIn(void);
+        static const OpenSteer::AVGroup& allVehiclesOfSelectedPlugIn(void);
 
         // ---------------------------------------------------- OpenSteerDemo phase
 
@@ -166,12 +160,12 @@ namespace OpenSteer {
         // Find the AbstractVehicle whose screen position is nearest the
         // current the mouse position.  Returns NULL if mouse is outside
         // this window or if there are no AbstractVehicles.
-        static AbstractVehicle* vehicleNearestToMouse (void);
+        static OpenSteer::AbstractVehicle* vehicleNearestToMouse (void);
 
         // Find the AbstractVehicle whose screen position is nearest the
         // given window coordinates, typically the mouse position.  Note
         // this will return NULL if there are no AbstractVehicles.
-        static AbstractVehicle* findVehicleNearestScreenPosition (int x, int y);
+        static OpenSteer::AbstractVehicle* findVehicleNearestScreenPosition (int x, int y);
 
         // for storing most recent mouse state
         static int mouseX;
@@ -181,34 +175,34 @@ namespace OpenSteer {
         // ------------------------------------------------------- camera utilities
 
         // set a certain initial camera state used by several plug-ins
-        static void init2dCamera (AbstractVehicle* selected);
-        static void init2dCamera (AbstractVehicle* selected,
+        static void init2dCamera (OpenSteer::AbstractVehicle* selected);
+        static void init2dCamera (OpenSteer::AbstractVehicle* selected,
                                   float distance,
                                   float elevation);
-        static void init3dCamera (AbstractVehicle* selected);
-        static void init3dCamera (AbstractVehicle* selected,
+        static void init3dCamera (OpenSteer::AbstractVehicle* selected);
+        static void init3dCamera (OpenSteer::AbstractVehicle* selected,
                                   float distance,
                                   float elevation);
 
         // set initial position of camera based on a vehicle
-        static void position3dCamera (AbstractVehicle* selected);
-        static void position3dCamera (AbstractVehicle* selected,
+        static void position3dCamera (OpenSteer::AbstractVehicle* selected);
+        static void position3dCamera (OpenSteer::AbstractVehicle* selected,
                                       float distance,
                                       float elevation);
-        static void position2dCamera (AbstractVehicle* selected);
-        static void position2dCamera (AbstractVehicle* selected,
+        static void position2dCamera (OpenSteer::AbstractVehicle* selected);
+        static void position2dCamera (OpenSteer::AbstractVehicle* selected,
                                       float distance,
                                       float elevation);
 
         // camera updating utility used by several (all?) plug-ins
         static void updateCamera (const float currentTime,
                                   const float elapsedTime,
-                                  const AbstractVehicle* selected);
+                                  const OpenSteer::AbstractVehicle* selected);
 
         // some camera-related default constants
         static const float camera2dElevation;
         static const float cameraTargetDistance;
-        static const Vec3 cameraTargetOffset;
+        static const OpenSteer::Vec3 cameraTargetOffset;
 
         // ------------------------------------------------ graphics and annotation
 
@@ -216,25 +210,25 @@ namespace OpenSteer {
         static void initializeGraphics (void);
 
         // ground plane grid-drawing utility used by several plug-ins
-        static void gridUtility (const Vec3& gridTarget);
+        static void gridUtility (const OpenSteer::Vec3& gridTarget);
 
         // draws a gray disk on the XZ plane under a given vehicle
-        static void highlightVehicleUtility (const AbstractVehicle* vehicle);
+        static void highlightVehicleUtility (const OpenSteer::AbstractVehicle* vehicle);
 
         // draws a gray circle on the XZ plane under a given vehicle
-        static void circleHighlightVehicleUtility (const AbstractVehicle* vehicle);
+        static void circleHighlightVehicleUtility (const OpenSteer::AbstractVehicle* vehicle);
 
         // draw a box around a vehicle aligned with its local space
         // xxx not used as of 11-20-02
-        static void drawBoxHighlightOnVehicle (const AbstractVehicle* v,
-                                               const Color& color);
+        static void drawBoxHighlightOnVehicle (const OpenSteer::AbstractVehicle* v,
+                                               const OpenSteer::Color& color);
 
         // draws a colored circle (perpendicular to view axis) around the center
         // of a given vehicle.  The circle's radius is the vehicle's radius times
         // radiusMultiplier.
-        static void drawCircleHighlightOnVehicle (const AbstractVehicle* v,
+        static void drawCircleHighlightOnVehicle (const OpenSteer::AbstractVehicle* v,
                                                   const float radiusMultiplier,
-                                                  const Color& color);
+                                                  const OpenSteer::Color& color);
 
         // ----------------------------------------------------------- console text
 
@@ -277,15 +271,6 @@ namespace OpenSteer {
         static const int updatePhase;
         static const int overheadPhase;
     };
-
-} // namespace OpenSteer
-    
-    
-// ----------------------------------------------------------------------------
-
-
-#include "Draw.h"
-
-
+   
 // ----------------------------------------------------------------------------
 #endif // OPENSTEER_OPENSTEERDEMO_H

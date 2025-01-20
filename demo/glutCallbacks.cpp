@@ -183,7 +183,7 @@
             // mouse-left (with no modifiers): select vehicle
             if (modNone && mouseL)
             {
-                OpenSteer::OpenSteerDemo::selectVehicleNearestScreenPosition (x, y);
+                OpenSteerDemo::selectVehicleNearestScreenPosition (x, y);
             }
 
             // control-mouse-left: begin adjusting camera angle (on Mac OS X
@@ -250,7 +250,7 @@
             }
 
             // pass adjustment vector to camera's mouse adjustment routine
-            OpenSteer::OpenSteerDemo::camera.mouseAdjustOffset (cameraAdjustment);
+            OpenSteerDemo::camera.mouseAdjustOffset (cameraAdjustment);
         }
     }
 
@@ -262,8 +262,8 @@
     void 
     mousePassiveMotionFunc (int x, int y)
     {
-        OpenSteer::OpenSteerDemo::mouseX = x;
-        OpenSteer::OpenSteerDemo::mouseY = y;
+        OpenSteerDemo::mouseX = x;
+        OpenSteerDemo::mouseY = y;
     }
 
 
@@ -274,8 +274,8 @@
     void 
     mouseEnterExitWindowFunc (int state)
     {
-        if (state == GLUT_ENTERED) OpenSteer::OpenSteerDemo::mouseInWindow = true;
-        if (state == GLUT_LEFT)    OpenSteer::OpenSteerDemo::mouseInWindow = false;
+        if (state == GLUT_ENTERED) OpenSteerDemo::mouseInWindow = true;
+        if (state == GLUT_LEFT)    OpenSteerDemo::mouseInWindow = false;
     }
 
 
@@ -288,9 +288,9 @@
     {
         const int h = glutGet (GLUT_WINDOW_HEIGHT);
         const OpenSteer::Vec3 screenLocation (10, h-20, 0);
-        draw2dTextAt2dLocation (*OpenSteer::OpenSteerDemo::nameOfSelectedPlugIn (),
+        draw2dTextAt2dLocation (*OpenSteerDemo::nameOfSelectedPlugIn (),
                                 screenLocation,
-                                OpenSteer::gWhite, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+           OpenSteer::gWhite, drawGetWindowWidth(), drawGetWindowHeight());
     }
 
 
@@ -302,9 +302,9 @@
     drawDisplayCameraModeName (void)
     {
         std::ostringstream message;
-        message << "Camera: " << OpenSteer::OpenSteerDemo::camera.modeName () << std::ends;
+        message << "Camera: " << OpenSteerDemo::camera.modeName () << std::ends;
         const OpenSteer::Vec3 screenLocation (10, 10, 0);
-        OpenSteer::draw2dTextAt2dLocation (message, screenLocation, OpenSteer::gWhite, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+        draw2dTextAt2dLocation (message, screenLocation, OpenSteer::gWhite, drawGetWindowWidth(), drawGetWindowHeight());
     }
 
 
@@ -321,24 +321,24 @@
        std::ostringstream message;
 
        int demo_key = 0;
-       const char* line = OpenSteer::OpenSteerDemo::getDemoKeyHelp(demo_key);
+       const char* line = OpenSteerDemo::getDemoKeyHelp(demo_key);
        while (line != NULL)
        {
           message << line << std::endl;
-          line = OpenSteer::OpenSteerDemo::getDemoKeyHelp(++demo_key);
+          line = OpenSteerDemo::getDemoKeyHelp(++demo_key);
        }
 
        int fn_key_no = 1;
-       line = OpenSteer::OpenSteerDemo::getFunctionKeyHelp(fn_key_no);
+       line = OpenSteerDemo::getFunctionKeyHelp(fn_key_no);
        while (line != NULL)
        {
           message << line << std::endl;
-          line = OpenSteer::OpenSteerDemo::getFunctionKeyHelp(++fn_key_no);
+          line = OpenSteerDemo::getFunctionKeyHelp(++fn_key_no);
        }
        const int h = glutGet(GLUT_WINDOW_HEIGHT);
        //const OpenSteer::Vec3 screenLocation(10, h - 20, 0);
-       const OpenSteer::Vec3 screenLocation(OpenSteer::drawGetWindowWidth() - 400, h - 20, 0);
-       OpenSteer::draw2dTextAt2dLocation(message, screenLocation, OpenSteer::gWhite, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+       const OpenSteer::Vec3 screenLocation(drawGetWindowWidth() - 400, h - 20, 0);
+       draw2dTextAt2dLocation(message, screenLocation, OpenSteer::gWhite, drawGetWindowWidth(), drawGetWindowHeight());
     }
 
 
@@ -360,7 +360,7 @@
         stream << " (";
 
         // different notation for variable and fixed frame rate
-        if (OpenSteer::OpenSteerDemo::clock.getVariableFrameRateMode())
+        if (OpenSteerDemo::clock.getVariableFrameRateMode())
         {
             // express as FPS (inverse of phase time)
             stream << 1 / phaseTimer;
@@ -369,7 +369,7 @@
         else
         {
             // quantify time as a percentage of frame time
-            const int fps = OpenSteer::OpenSteerDemo::clock.getFixedFrameRate ();
+            const int fps = OpenSteerDemo::clock.getFixedFrameRate ();
             stream << ((100 * phaseTimer) / (1.0f / fps));
             stream << "% of 1/";
             stream << fps;
@@ -407,14 +407,14 @@
             OpenSteer::Vec3 screenLocation (10, 10, 0);
 
             // target and recent average frame rates
-            const int targetFPS = OpenSteer::OpenSteerDemo::clock.getFixedFrameRate ();
-            const float smoothedFPS = OpenSteer::OpenSteerDemo::clock.getSmoothedFPS ();
+            const int targetFPS = OpenSteerDemo::clock.getFixedFrameRate ();
+            const float smoothedFPS = OpenSteerDemo::clock.getSmoothedFPS ();
 
             // describe clock mode and frame rate statistics
             screenLocation.y += lh;
             std::ostringstream clockStr;
             clockStr << "Clock: ";
-            if (OpenSteer::OpenSteerDemo::clock.getAnimationMode ())
+            if (OpenSteerDemo::clock.getAnimationMode ())
             {
                 clockStr << "animation mode (";
                 clockStr << targetFPS << " fps,";
@@ -425,7 +425,7 @@
             else
             {
                 clockStr << "real-time mode, ";
-                if (OpenSteer::OpenSteerDemo::clock.getVariableFrameRateMode ())
+                if (OpenSteerDemo::clock.getVariableFrameRateMode ())
                 {
                     clockStr << "variable frame rate (";
                     clockStr << OpenSteer::round(smoothedFPS) << " fps)";
@@ -443,7 +443,7 @@
                     std::ostringstream xxxStr;
                     xxxStr << std::setprecision (0)
                            << std::setiosflags (std::ios::fixed)
-                           << "usage: " << OpenSteer::OpenSteerDemo::clock.getSmoothedUsage ()
+                           << "usage: " << OpenSteerDemo::clock.getSmoothedUsage ()
                            << "%"
                            << std::ends;
 
@@ -453,21 +453,21 @@
 
                     // display message in lower left corner of window
                     // (draw in red if the instantaneous usage is 100% or more)
-                    const float usage = OpenSteer::OpenSteerDemo::clock.getUsage ();
+                    const float usage = OpenSteerDemo::clock.getUsage ();
                     const OpenSteer::Color color = (usage >= 100) ? OpenSteer::gRed : OpenSteer::gWhite;
-                    draw2dTextAt2dLocation (xxxStr, sp, color, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+                    draw2dTextAt2dLocation (xxxStr, sp, color, drawGetWindowWidth(), drawGetWindowHeight());
                 }
             }
-            if (OpenSteer::OpenSteerDemo::clock.getPausedState ())
+            if (OpenSteerDemo::clock.getPausedState ())
                 clockStr << " [paused]";
             clockStr << std::ends;
-            draw2dTextAt2dLocation (clockStr, screenLocation, OpenSteer::gWhite, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+            draw2dTextAt2dLocation (clockStr, screenLocation, OpenSteer::gWhite, drawGetWindowWidth(), drawGetWindowHeight());
 
             // get smoothed phase timer information
-            const float ptd = OpenSteer::OpenSteerDemo::phaseTimerDraw();
-            const float ptu = OpenSteer::OpenSteerDemo::phaseTimerUpdate();
-            const float pto = OpenSteer::OpenSteerDemo::phaseTimerOverhead();
-            const float smoothRate = OpenSteer::OpenSteerDemo::clock.getSmoothingRate ();
+            const float ptd = OpenSteerDemo::phaseTimerDraw();
+            const float ptu = OpenSteerDemo::phaseTimerUpdate();
+            const float pto = OpenSteerDemo::phaseTimerOverhead();
+            const float smoothRate = OpenSteerDemo::clock.getSmoothingRate ();
             OpenSteer::blendIntoAccumulator (smoothRate, ptd, gSmoothedTimerDraw);
             OpenSteer::blendIntoAccumulator (smoothRate, ptu, gSmoothedTimerUpdate);
             OpenSteer::blendIntoAccumulator (smoothRate, pto, gSmoothedTimerOverhead);
@@ -482,7 +482,7 @@
             timerStr << "other:  ";
             writePhaseTimerReportToStream (gSmoothedTimerOverhead, timerStr);
             timerStr << std::ends;
-            draw2dTextAt2dLocation (timerStr, screenLocation, OpenSteer::gGreen, OpenSteer::drawGetWindowWidth(), OpenSteer::drawGetWindowHeight());
+            draw2dTextAt2dLocation (timerStr, screenLocation, OpenSteer::gGreen, drawGetWindowWidth(), drawGetWindowHeight());
         }
     }
 
@@ -501,29 +501,29 @@
         {
         case 3: 
             // animation mode at 60 fps
-            OpenSteer::OpenSteerDemo::clock.setFixedFrameRate (60);
-            OpenSteer::OpenSteerDemo::clock.setAnimationMode (true);
-            OpenSteer::OpenSteerDemo::clock.setVariableFrameRateMode (false);
+            OpenSteerDemo::clock.setFixedFrameRate (60);
+            OpenSteerDemo::clock.setAnimationMode (true);
+            OpenSteerDemo::clock.setVariableFrameRateMode (false);
             break;
         case 2: 
             // real-time fixed frame rate mode at 60 fps
-            OpenSteer::OpenSteerDemo::clock.setFixedFrameRate (60);
-            OpenSteer::OpenSteerDemo::clock.setAnimationMode (false);
-            OpenSteer::OpenSteerDemo::clock.setVariableFrameRateMode (false);
+            OpenSteerDemo::clock.setFixedFrameRate (60);
+            OpenSteerDemo::clock.setAnimationMode (false);
+            OpenSteerDemo::clock.setVariableFrameRateMode (false);
             break;
         case 1: 
             // real-time fixed frame rate mode at 24 fps
-            OpenSteer::OpenSteerDemo::clock.setFixedFrameRate (24);
-            OpenSteer::OpenSteerDemo::clock.setAnimationMode (false);
-            OpenSteer::OpenSteerDemo::clock.setVariableFrameRateMode (false);
+            OpenSteerDemo::clock.setFixedFrameRate (24);
+            OpenSteerDemo::clock.setAnimationMode (false);
+            OpenSteerDemo::clock.setVariableFrameRateMode (false);
             break;
         case 0:
         default:
             // real-time variable frame rate mode ("as fast as possible")
             frameRatePresetIndex = 0;
-            OpenSteer::OpenSteerDemo::clock.setFixedFrameRate (0);
-            OpenSteer::OpenSteerDemo::clock.setAnimationMode (false);
-            OpenSteer::OpenSteerDemo::clock.setVariableFrameRateMode (true);
+            OpenSteerDemo::clock.setFixedFrameRate (0);
+            OpenSteerDemo::clock.setAnimationMode (false);
+            OpenSteerDemo::clock.setVariableFrameRateMode (true);
             break;
         }
     }
@@ -551,45 +551,45 @@
         {
         // reset selected PlugIn
         case 'r':
-            OpenSteer::OpenSteerDemo::resetSelectedPlugIn ();
+            OpenSteerDemo::resetSelectedPlugIn ();
             message << "reset PlugIn "
-                    << '"' << OpenSteer::OpenSteerDemo::nameOfSelectedPlugIn () << '"'
+                    << '"' << OpenSteerDemo::nameOfSelectedPlugIn () << '"'
                     << std::ends;
-            OpenSteer::OpenSteerDemo::printMessage (message);
+            OpenSteerDemo::printMessage (message);
             break;
 
         // cycle selection to next vehicle
         case 's':
-            OpenSteer::OpenSteerDemo::printMessage ("select next vehicle/agent");
-            OpenSteer::OpenSteerDemo::selectNextVehicle ();
+            OpenSteerDemo::printMessage ("select next vehicle/agent");
+            OpenSteerDemo::selectNextVehicle ();
             break;
 
         // camera mode cycle
         case 'c':
-            OpenSteer::OpenSteerDemo::camera.selectNextMode ();
+            OpenSteerDemo::camera.selectNextMode ();
             message << "select camera mode "
-                    << '"' << OpenSteer::OpenSteerDemo::camera.modeName () << '"' << std::ends;
-            OpenSteer::OpenSteerDemo::printMessage (message);
+                    << '"' << OpenSteerDemo::camera.modeName () << '"' << std::ends;
+            OpenSteerDemo::printMessage (message);
             break;
 
         // select next PlugIn
         case tab:
-            OpenSteer::OpenSteerDemo::selectNextPlugIn ();
+            OpenSteerDemo::selectNextPlugIn ();
             message << "select next PlugIn: "
-                    << '"' << OpenSteer::OpenSteerDemo::nameOfSelectedPlugIn () << '"'
+                    << '"' << OpenSteerDemo::nameOfSelectedPlugIn () << '"'
                     << std::ends;
-            OpenSteer::OpenSteerDemo::printMessage (message);
+            OpenSteerDemo::printMessage (message);
             break;
 
         // toggle annotation state
         case 'a':
-            OpenSteer::OpenSteerDemo::printMessage (OpenSteer::toggleAnnotationState () ?
+            OpenSteerDemo::printMessage (toggleAnnotationState () ?
                                                     "annotation ON" : "annotation OFF");
             break;
 
         // toggle run/pause state
         case space:
-            OpenSteer::OpenSteerDemo::printMessage (OpenSteer::OpenSteerDemo::clock.togglePausedState () ?
+            OpenSteerDemo::printMessage (OpenSteerDemo::clock.togglePausedState () ?
                                                     "pause" : "run");
             break;
 
@@ -597,40 +597,40 @@
         case 'f':
             selectNextPresetFrameRate ();
             message << "set clock to ";
-            if (OpenSteer::OpenSteerDemo::clock.getAnimationMode ())
+            if (OpenSteerDemo::clock.getAnimationMode ())
                 message << "animation mode, fixed frame rate ("
-                        << OpenSteer::OpenSteerDemo::clock.getFixedFrameRate () << " fps)";
+                        << OpenSteerDemo::clock.getFixedFrameRate () << " fps)";
             else
             {
                 message << "real-time mode, ";
-                if (OpenSteer::OpenSteerDemo::clock.getVariableFrameRateMode ())
+                if (OpenSteerDemo::clock.getVariableFrameRateMode ())
                     message << "variable frame rate";
                 else
                     message << "fixed frame rate ("
-                            << OpenSteer::OpenSteerDemo::clock.getFixedFrameRate () << " fps)";
+                            << OpenSteerDemo::clock.getFixedFrameRate () << " fps)";
             }
             message << std::ends;
-            OpenSteer::OpenSteerDemo::printMessage (message);
+            OpenSteerDemo::printMessage (message);
             break;
 
         // print minimal help for single key commands
         case '?':
-            OpenSteer::OpenSteerDemo::keyboardMiniHelp ();
+            OpenSteerDemo::keyboardMiniHelp ();
             break;
 
         // exit application with normal status 
         case esc:
             glutDestroyWindow (windowID);
-            OpenSteer::OpenSteerDemo::printMessage ("exit.");
-            OpenSteer::OpenSteerDemo::exit (0);
+            OpenSteerDemo::printMessage ("exit.");
+            OpenSteerDemo::exit (0);
 
         default:
             message << "unrecognized single key command: " << key;
             message << " (" << (int)key << ")";//xxx perhaps only for debugging?
             message << std::ends;
-            OpenSteer::OpenSteerDemo::printMessage ("");
-            OpenSteer::OpenSteerDemo::printMessage (message);
-            OpenSteer::OpenSteerDemo::keyboardMiniHelp ();
+            OpenSteerDemo::printMessage ("");
+            OpenSteerDemo::printMessage (message);
+            OpenSteerDemo::keyboardMiniHelp ();
         }
     }
 
@@ -648,26 +648,26 @@
 
         switch (key)
         {
-        case GLUT_KEY_F1:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (1);  break;
-        case GLUT_KEY_F2:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (2);  break;
-        case GLUT_KEY_F3:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (3);  break;
-        case GLUT_KEY_F4:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (4);  break;
-        case GLUT_KEY_F5:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (5);  break;
-        case GLUT_KEY_F6:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (6);  break;
-        case GLUT_KEY_F7:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (7);  break;
-        case GLUT_KEY_F8:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (8);  break;
-        case GLUT_KEY_F9:  OpenSteer::OpenSteerDemo::functionKeyForPlugIn (9);  break;
-        case GLUT_KEY_F10: OpenSteer::OpenSteerDemo::functionKeyForPlugIn (10); break;
-        case GLUT_KEY_F11: OpenSteer::OpenSteerDemo::functionKeyForPlugIn (11); break;
-        case GLUT_KEY_F12: OpenSteer::OpenSteerDemo::functionKeyForPlugIn (12); break;
+        case GLUT_KEY_F1:  OpenSteerDemo::functionKeyForPlugIn (1);  break;
+        case GLUT_KEY_F2:  OpenSteerDemo::functionKeyForPlugIn (2);  break;
+        case GLUT_KEY_F3:  OpenSteerDemo::functionKeyForPlugIn (3);  break;
+        case GLUT_KEY_F4:  OpenSteerDemo::functionKeyForPlugIn (4);  break;
+        case GLUT_KEY_F5:  OpenSteerDemo::functionKeyForPlugIn (5);  break;
+        case GLUT_KEY_F6:  OpenSteerDemo::functionKeyForPlugIn (6);  break;
+        case GLUT_KEY_F7:  OpenSteerDemo::functionKeyForPlugIn (7);  break;
+        case GLUT_KEY_F8:  OpenSteerDemo::functionKeyForPlugIn (8);  break;
+        case GLUT_KEY_F9:  OpenSteerDemo::functionKeyForPlugIn (9);  break;
+        case GLUT_KEY_F10: OpenSteerDemo::functionKeyForPlugIn (10); break;
+        case GLUT_KEY_F11: OpenSteerDemo::functionKeyForPlugIn (11); break;
+        case GLUT_KEY_F12: OpenSteerDemo::functionKeyForPlugIn (12); break;
 
         case GLUT_KEY_RIGHT:
-            OpenSteer::OpenSteerDemo::clock.setPausedState (true);
+            OpenSteerDemo::clock.setPausedState (true);
             message << "single step forward (frame time: "
-                    << OpenSteer::OpenSteerDemo::clock.advanceSimulationTimeOneFrame ()
+                    << OpenSteerDemo::clock.advanceSimulationTimeOneFrame ()
                     << ")"
                     << std::endl;
-            OpenSteer::OpenSteerDemo::printMessage (message);
+            OpenSteerDemo::printMessage (message);
             break;
         }
     }
@@ -685,7 +685,7 @@
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // run simulation and draw associated graphics
-        OpenSteer::OpenSteerDemo::updateSimulationAndRedraw ();
+        OpenSteerDemo::updateSimulationAndRedraw ();
 
         // draw text showing (smoothed, rounded) "frames per second" rate
         drawDisplayFPS ();
@@ -703,7 +703,7 @@
         // drawReticle ();
 
         // check for errors in drawing module, if so report and exit
-        OpenSteer::checkForDrawError ("OpenSteerDemo::updateSimulationAndRedraw");
+        checkForDrawError ("OpenSteerDemo::updateSimulationAndRedraw");
 
         // double buffering, swap back and front buffers
         glFlush ();

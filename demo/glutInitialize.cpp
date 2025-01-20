@@ -68,7 +68,7 @@
 
 
 void 
-OpenSteer::initializeGraphics (int argc, char **argv)
+initializeGraphics (int argc, char **argv)
 {
     // initialize GLUT state based on command line arguments
     glutInit (&argc, argv);  
@@ -120,7 +120,7 @@ OpenSteer::initializeGraphics (int argc, char **argv)
 
 
 void 
-OpenSteer::runGraphics (void)
+runGraphics (void)
 {
     glutMainLoop ();  
 }
@@ -132,14 +132,14 @@ OpenSteer::runGraphics (void)
 
 
 float 
-OpenSteer::drawGetWindowHeight (void) 
+drawGetWindowHeight (void) 
 {
     return (float)glutGet (GLUT_WINDOW_HEIGHT);
 }
 
 
 float 
-OpenSteer::drawGetWindowWidth  (void) 
+drawGetWindowWidth  (void) 
 {
     return (float)glutGet (GLUT_WINDOW_WIDTH);
 }

@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include;$(ProjectDir)\..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -90,16 +90,16 @@
       <OutputFile>$(OutDir)$(ProjectName)d.lib</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)\lib"
-copy "$(TargetPath)" "$(ProjectDir)\lib"
+      <Command>mkdir "$(ProjectDir)lib"
+copy "$(TargetPath)" "$(ProjectDir)lib"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include;$(ProjectDir)\..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -123,7 +123,7 @@ copy "$(OutDir)$(ProjectName)$(TargetExt)" "$(ProjectDir)lib\$(Configuration)"
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include;$(ProjectDir)\..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -134,8 +134,8 @@ copy "$(OutDir)$(ProjectName)$(TargetExt)" "$(ProjectDir)lib\$(Configuration)"
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command>mkdir "$(ProjectDir)\lib"
-copy "$(TargetPath)" "$(ProjectDir)\lib"
+      <Command>mkdir "$(ProjectDir)lib"
+copy "$(TargetPath)" "$(ProjectDir)lib"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -144,8 +144,8 @@ copy "$(TargetPath)" "$(ProjectDir)\lib"
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\include;$(ProjectDir)\..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\include;$(ProjectDir)..\include\Opensteer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -162,6 +162,7 @@ copy "$(TargetPath)" "$(ProjectDir)lib\$(Configuration)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Color.cpp" />
     <ClCompile Include="..\src\lq.c" />
     <ClCompile Include="..\src\Obstacle.cpp" />
     <ClCompile Include="..\src\Path.cpp" />
@@ -176,6 +177,7 @@ copy "$(TargetPath)" "$(ProjectDir)lib\$(Configuration)"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\OpenSteer\AbstractVehicle.h" />
+    <ClInclude Include="..\include\OpenSteer\Color.h" />
     <ClInclude Include="..\include\OpenSteer\LocalSpace.h" />
     <ClInclude Include="..\include\OpenSteer\lq.h" />
     <ClInclude Include="..\include\OpenSteer\Obstacle.h" />

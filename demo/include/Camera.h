@@ -49,11 +49,7 @@
 
 
 // ----------------------------------------------------------------------------
-
-
-namespace OpenSteer {
-
-    class Camera : public LocalSpace
+    class Camera : public OpenSteer::LocalSpace
     {
     public:
 
@@ -65,10 +61,10 @@ namespace OpenSteer {
         void reset (void);
 
         // "look at" point, center of view
-        Vec3 target;
+        OpenSteer::Vec3 target;
 
         // vehicle being tracked
-        const AbstractVehicle* vehicleToTrack;
+        const OpenSteer::AbstractVehicle* vehicleToTrack;
 
         // aim at predicted position of vehicleToTrack, this far into thefuture
         float aimLeadTime;
@@ -81,12 +77,12 @@ namespace OpenSteer {
         {update (currentTime, elapsedTime, false);};
 
         // helper function for "drag behind" mode
-        Vec3 constDistHelper (const float elapsedTime);
+        OpenSteer::Vec3 constDistHelper (const float elapsedTime);
 
         // Smoothly move camera ...
-        void smoothCameraMove (const Vec3& newPosition,
-                               const Vec3& newTarget,
-                               const Vec3& newUp,
+        void smoothCameraMove (const OpenSteer::Vec3& newPosition,
+                               const OpenSteer::Vec3& newTarget,
+                               const OpenSteer::Vec3& newUp,
                                const float elapsedTime);
 
         void doNotSmoothNextMove (void) {smoothNextMove = false;};
@@ -96,23 +92,23 @@ namespace OpenSteer {
 
         // adjust the offset vector of the current camera mode based on a
         // "mouse adjustment vector" from OpenSteerDemo (xxx experiment 10-17-02)
-        void mouseAdjustOffset (const Vec3& adjustment);
-        Vec3 mouseAdjust2 (const bool polar,
-                           const Vec3& adjustment,
-                           const Vec3& offsetToAdjust);
-        Vec3 mouseAdjustPolar (const Vec3& adjustment,
-                               const Vec3& offsetToAdjust)
+        void mouseAdjustOffset (const OpenSteer::Vec3& adjustment);
+        OpenSteer::Vec3 mouseAdjust2 (const bool polar,
+                           const OpenSteer::Vec3& adjustment,
+                           const OpenSteer::Vec3& offsetToAdjust);
+        OpenSteer::Vec3 mouseAdjustPolar (const OpenSteer::Vec3& adjustment,
+                               const OpenSteer::Vec3& offsetToAdjust)
         {return mouseAdjust2 (true, adjustment, offsetToAdjust);};
-        Vec3 mouseAdjustOrtho (const Vec3& adjustment,
-                               const Vec3& offsetToAdjust)
+        OpenSteer::Vec3 mouseAdjustOrtho (const OpenSteer::Vec3& adjustment,
+                               const OpenSteer::Vec3& offsetToAdjust)
         {return mouseAdjust2 (false, adjustment, offsetToAdjust);};
 
         // xxx since currently (10-21-02) the camera's Forward and Side basis
         // xxx vectors are not being set, construct a temporary local space for
         // xxx the camera view -- so as not to make the camera behave
         // xxx differently (which is to say, correctly) during mouse adjustment.
-        LocalSpace ls;
-        const LocalSpace& xxxls (void)
+        OpenSteer::LocalSpace ls;
+        const OpenSteer::LocalSpace& xxxls (void)
         {ls.regenerateOrthonormalBasis (target - position(), up()); return ls;}
 
 
@@ -160,9 +156,9 @@ namespace OpenSteer {
         cameraMode successorMode (const cameraMode cm) const;
 
         // "static" camera mode parameters
-        Vec3 fixedPosition;
-        Vec3 fixedTarget;
-        Vec3 fixedUp;
+        OpenSteer::Vec3 fixedPosition;
+        OpenSteer::Vec3 fixedTarget;
+        OpenSteer::Vec3 fixedUp;
 
         // "constant distance from vehicle" camera mode parameters
         float fixedDistDistance;             // desired distance from it
@@ -172,13 +168,11 @@ namespace OpenSteer {
         float lookdownDistance;             // fixed vertical offset from it
 
         // "fixed local offset" camera mode parameters
-        Vec3 fixedLocalOffset;
+        OpenSteer::Vec3 fixedLocalOffset;
 
         // "offset POV" camera mode parameters
-        Vec3 povOffset;
+        OpenSteer::Vec3 povOffset;
     };
-
-} // namespace OpenSteer
 
 // ----------------------------------------------------------------------------
 #endif // OPENSTEER_CAMERA_H

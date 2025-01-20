@@ -78,9 +78,6 @@ FooPlugIn gFooPlugIn;
 
 // ----------------------------------------------------------------------------
 
-
-namespace OpenSteer {
-
     class AbstractPlugIn
     {
     public:
@@ -116,7 +113,7 @@ namespace OpenSteer {
 
         // return an AVGroup (an STL vector of AbstractVehicle pointers) of
         // all vehicles(/agents/characters) defined by the PlugIn
-        virtual const AVGroup& allVehicles (void) = 0;
+        virtual const OpenSteer::AVGroup& allVehicles (void) = 0;
     };
 
 
@@ -188,9 +185,6 @@ namespace OpenSteer {
         static int itemsInRegistry;
         static PlugIn* registry[];
     };
-
-} // namespace OpenSteer    
-    
 
 // ----------------------------------------------------------------------------
 #endif // OPENSTEER_PLUGIN_H

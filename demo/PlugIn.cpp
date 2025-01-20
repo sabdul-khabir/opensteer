@@ -46,16 +46,16 @@
 // XXX replace with STL utilities
 
 
-int OpenSteer::PlugIn::itemsInRegistry = 0;
-const int OpenSteer::PlugIn::totalSizeOfRegistry = 1000;
-OpenSteer::PlugIn* OpenSteer::PlugIn::registry [totalSizeOfRegistry];
+int PlugIn::itemsInRegistry = 0;
+const int PlugIn::totalSizeOfRegistry = 1000;
+PlugIn* PlugIn::registry [totalSizeOfRegistry];
 
 
 // ----------------------------------------------------------------------------
 // constructor
 
 
-OpenSteer::PlugIn::PlugIn (void)
+PlugIn::PlugIn (void)
 {
     // save this new instance in the registry
     addToRegistry ();
@@ -66,15 +66,15 @@ OpenSteer::PlugIn::PlugIn (void)
 // destructor
 
 
-OpenSteer::PlugIn::~PlugIn() {}
+PlugIn::~PlugIn() {}
 
 
 // ----------------------------------------------------------------------------
 // returns pointer to the next PlugIn in "selection order"
 
 
-OpenSteer::PlugIn* 
-OpenSteer::PlugIn::next (void)
+PlugIn* 
+PlugIn::next (void)
 {
     for (int i = 0; i < itemsInRegistry; i++)
     {
@@ -93,8 +93,8 @@ OpenSteer::PlugIn::next (void)
 // returns NULL if none is found
 
 
-OpenSteer::PlugIn* 
-OpenSteer::PlugIn::findByName (const char* string)
+PlugIn* 
+PlugIn::findByName (const char* string)
 {
     if (string)
     {
@@ -114,7 +114,7 @@ OpenSteer::PlugIn::findByName (const char* string)
 
 
 void 
-OpenSteer::PlugIn::applyToAll (plugInCallBackFunction f)
+PlugIn::applyToAll (plugInCallBackFunction f)
 {
     for (int i = 0; i < itemsInRegistry; i++)
     {
@@ -130,7 +130,7 @@ OpenSteer::PlugIn::applyToAll (plugInCallBackFunction f)
 
 
 void 
-OpenSteer::PlugIn::sortBySelectionOrder (void)
+PlugIn::sortBySelectionOrder (void)
 {
     // I know, I know, just what the world needs:
     // another inline shell sort implementation...
@@ -159,8 +159,8 @@ OpenSteer::PlugIn::sortBySelectionOrder (void)
 // returns pointer to default PlugIn (currently, first in registry)
 
 
-OpenSteer::PlugIn* 
-OpenSteer::PlugIn::findDefault (void)
+PlugIn* 
+PlugIn::findDefault (void)
 {
     // return NULL if no PlugIns exist
     if (itemsInRegistry == 0) return NULL;
@@ -182,7 +182,7 @@ OpenSteer::PlugIn::findDefault (void)
 
 
 void 
-OpenSteer::PlugIn::addToRegistry (void)
+PlugIn::addToRegistry (void)
 {
     // save this instance in the registry
     registry[itemsInRegistry++] = this;

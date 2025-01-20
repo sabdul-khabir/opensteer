@@ -46,13 +46,13 @@
 int main (int argc, char **argv) 
 {
     // initialize OpenSteerDemo application
-    OpenSteer::OpenSteerDemo::initialize ();
+    OpenSteerDemo::initialize ();
 
     // initialize graphics
-    OpenSteer::initializeGraphics (argc, argv);
+    initializeGraphics (argc, argv);
 
     // run the main event processing loop
-    OpenSteer::runGraphics ();  
+    runGraphics ();  
     return EXIT_SUCCESS;
 }
 
