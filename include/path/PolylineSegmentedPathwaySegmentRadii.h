@@ -40,13 +40,13 @@
 
 
 // Include OpenSteer::SegmentedPathway
-#include "OpenSteer/SegmentedPathway.h"
+#include "Path/SegmentedPathway.h"
 
 // Include OpenSteer::PolylineSegmentedPath
-#include "OpenSteer/PolylineSegmentedPath.h"
+#include "Path/PolylineSegmentedPath.h"
 
 // Include OpenSteer::PointToPathAlikeBaseDataExtractionPolicy
-#include "OpenSteer/QueryPathAlikeBaseDataExtractionPolicies.h"
+#include "Path/QueryPathAlikeBaseDataExtractionPolicies.h"
 
 // Include OpenSteer::Vec3
 #include "OpenSteer/Vec3.h"

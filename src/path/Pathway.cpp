@@ -25,7 +25,7 @@
  *
  * @author Bjoern Knafla <bknafla@uni-kassel.de>
  */
-#include "OpenSteer/Pathway.h"
+#include "Path/Pathway.h"
 
 OpenSteer::Pathway::~Pathway()
 {

@@ -59,16 +59,16 @@
 #include "OpenSteer/UnusedParameter.h"
 
 // Include OpenSteer::PolylineSegmentedPathwaySegmentRadii
-#include "OpenSteer/PolylineSegmentedPathwaySegmentRadii.h"
+#include "Path/PolylineSegmentedPathwaySegmentRadii.h"
 
 // Include OpenSteer::mapPointToPathway
-#include "OpenSteer/QueryPathAlike.h"
+#include "Path/QueryPathAlike.h"
 
 // Include OpenSteer::DontExtractPathDistance, OpenSteer::HasSegmentRadii
-#include "OpenSteer/QueryPathAlikeUtilities.h"
+#include "Path/QueryPathAlikeUtilities.h"
 
 // Include OpenSteer::nextSegment, OpenSteer::previousSegment
-#include "OpenSteer/SegmentedPathAlikeUtilities.h"
+#include "Path/SegmentedPathAlikeUtilities.h"
 
 // Include OpenSteer::square, OpenSteer::clamp
 #include "OpenSteer/Utilities.h"

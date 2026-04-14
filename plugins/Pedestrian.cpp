@@ -39,7 +39,7 @@
 
 #include <iomanip>
 #include <sstream>
-#include "OpenSteer/PolylineSegmentedPathwaySingleRadius.h"
+#include "Path/PolylineSegmentedPathwaySingleRadius.h"
 #include "SimpleVehicle.h"
 #include "OpenSteerDemo.h"
 #include "OpenSteer/Proximity.h"

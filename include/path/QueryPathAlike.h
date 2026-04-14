@@ -49,7 +49,7 @@
 #include "OpenSteer/Utilities.h"
 
 // Include OpenSteer::PointToPathAlikeBaseDataExtractionPolicy, OpenSteer::DistanceToPathAlikeBaseDataExtractionPolicy
-#include "OpenSteer/QueryPathAlikeBaseDataExtractionPolicies.h"
+#include "Path/QueryPathAlikeBaseDataExtractionPolicies.h"
 
 #ifdef _MSC_VER
 #undef min

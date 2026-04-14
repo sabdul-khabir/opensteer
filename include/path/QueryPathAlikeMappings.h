@@ -36,7 +36,7 @@
 
 
 // Include OpenSteer::HasNoRadius, OpenSteer::ExtractPathDistance, OpenSteer::DontExtractPathDistance
-#include "OpenSteer/QueryPathAlikeUtilities.h"
+#include "Path/QueryPathAlikeUtilities.h"
 
 // Include OpenSteer::Vec3
 #include "OpenSteer/Vec3.h"

@@ -25,15 +25,15 @@
  *
  * @author Bjoern Knafla <bknafla@uni-kassel.de>
  */
-#include "OpenSteer/Path.h"
+#include "Path/SegmentedPath.h"
 
-OpenSteer::Path::~Path()
+OpenSteer::SegmentedPath::~SegmentedPath()
 {
     // Nothing to do.
 }
 
 /*
-OpenSteer::Path& OpenSteer::Path::operator=( Path const& )
+OpenSteer::SegmentedPath& OpenSteer::SegmentedPath::operator=( SegmentedPath const& )
 {
     return *this;
 }

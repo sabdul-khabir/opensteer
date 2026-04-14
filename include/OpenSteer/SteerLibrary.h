@@ -48,7 +48,7 @@
 
 
 #include "OpenSteer/AbstractVehicle.h"
-#include "OpenSteer/Pathway.h"
+#include "Path/Pathway.h"
 #include "OpenSteer/Obstacle.h"
 #include "OpenSteer/Utilities.h"
 
@@ -351,7 +351,7 @@ OpenSteer::Vec3
 OpenSteer::SteerLibraryMixin<Super>::
 steerForFlee (const Vec3& target)
 {
-    const Vec3 desiredVelocity = position - target;
+    const Vec3 desiredVelocity = position() - target;
     return desiredVelocity - velocity();
 }
 
@@ -1040,7 +1040,7 @@ steerForEvasion (const AbstractVehicle& menace,
                  const float maxPredictionTime)
 {
     // offset from this to menace, that distance, unit vector toward menace
-    const Vec3 offset = menace.position - position;
+    const Vec3 offset = menace.position() - position();
     const float distance = offset.length ();
 
     const float roughTime = distance / menace.speed();
